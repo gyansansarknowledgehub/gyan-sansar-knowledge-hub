@@ -4,104 +4,150 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#102b55">
 <title>GYAN SANSAR KNOWLEDGE HUB</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f3f6fc;color:#222}
-header{background:#123c69;color:white;padding:25px 15px;text-align:center}
-header h1{margin:0;font-size:29px}
-header p{margin-bottom:0}
-nav{background:#092b4c;padding:14px;text-align:center}
-nav a{color:white;text-decoration:none;margin:8px;display:inline-block}
-.hero{text-align:center;padding:55px 15px;background:#dceaff}
-.hero h2{color:#123c69;font-size:27px}
-.hero p{line-height:1.7}
-.container{max-width:1000px;margin:auto;padding:25px 15px}
-h2{text-align:center;color:#123c69}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
-.card{background:white;padding:20px;border-radius:12px;box-shadow:0 2px 9px #0001}
-.card h3{color:#123c69;margin-top:0}
-.card p{line-height:1.6}
-footer{background:#092b4c;color:white;text-align:center;padding:22px;margin-top:25px}
+body{margin:0;font-family:Arial,"Noto Sans Devanagari",sans-serif;background:#f4f7fc;color:#17243a}
+header{background:#102b55;color:white;text-align:center;padding:28px 15px}
+header h1{margin:0;font-size:30px}
+header h2{margin:5px 0;color:#ffca55}
+header p{margin:8px 0}
+nav{background:#173d70;padding:13px;text-align:center;position:sticky;top:0;z-index:5}
+nav a{color:white;text-decoration:none;margin:0 10px;font-weight:bold}
+.hero{text-align:center;padding:40px 15px;background:linear-gradient(120deg,#e4edff,#fff4dc)}
+.hero h2{color:#102b55;font-size:27px}
+.hero p{line-height:1.8}
+.search{width:90%;max-width:600px;padding:14px;border:1px solid #ccd5e3;border-radius:10px;font-size:16px;margin:15px auto;display:block}
+.container{max-width:1150px;margin:auto;padding:25px 15px}
+.section-title{text-align:center;color:#102b55}
+.count{text-align:center;color:#52627a}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.card{background:white;padding:20px;border-radius:13px;box-shadow:0 3px 12px #17243a12;border:1px solid #e5eaf2}
+.card h3{color:#173d70;margin-top:0}
+.card p{line-height:1.7;color:#52627a}
+.card button{background:#173d70;color:white;border:0;padding:10px 15px;border-radius:7px;cursor:pointer}
+.card button:hover{background:#e39b22}
+.info{background:white;padding:25px;border-radius:12px;line-height:1.8}
+footer{background:#102b55;color:white;text-align:center;padding:25px;margin-top:30px}
+a{color:inherit}
 </style>
 </head>
 <body>
 
 <header>
 <h1>🌍 GYAN SANSAR</h1>
-<p>KNOWLEDGE HUB</p>
+<h2>KNOWLEDGE HUB</h2>
 <p>LEARN • GROW • SUCCEED</p>
+<p>ज्ञान सबैका लागि, शिक्षा जीवनका लागि।</p>
 </header>
 
 <nav>
 <a href="#home">गृहपृष्ठ</a>
-<a href="#courses">पाठ्यक्रम</a>
+<a href="#departments">विभागहरू</a>
 <a href="#about">हाम्रो बारेमा</a>
 <a href="#contact">सम्पर्क</a>
 </nav>
 
 <section class="hero" id="home">
 <h2>ज्ञान नै सबैभन्दा ठूलो शक्ति हो</h2>
-<p>नेपालदेखि विश्वसम्म, सबैका लागि शिक्षा, सीप र ज्ञानको साझा डिजिटल प्लेटफर्म।</p>
-<p>आज सिकौँ, भोलि सफल बनौँ!</p>
+<p>नेपालदेखि विश्वसम्म, सबैका लागि शिक्षा, सीप र ज्ञानको साझा डिजिटल प्लेटफर्म।<br>आज सिकौँ, भोलि सफल बनौँ!</p>
+<strong>आफूलाई चाहिएको विषय खोज्नुहोस्</strong>
+<input class="search" id="search" type="search" placeholder="🔍 विभाग वा विषय खोज्नुहोस्..." oninput="searchDepartments()">
 </section>
 
-<section class="container" id="courses">
-<h2>हाम्रा शैक्षिक विभागहरू</h2>
-<div class="grid">
-
-<div class="card">
-<h3>📚 विद्यालय शिक्षा</h3>
-<p>कक्षा १ देखि १२ सम्म, SEE तथा +2 अध्ययन सामग्री।</p>
-</div>
-
-<div class="card">
-<h3>🌐 भाषा शिक्षा</h3>
-<p>अंग्रेजी, नेपाली, रोमानियन तथा विश्वका विभिन्न भाषा सिकौँ।</p>
-</div>
-
-<div class="card">
-<h3>📝 लोकसेवा तयारी</h3>
-<p>लोकसेवा, शिक्षक सेवा, प्रहरी तथा बैंकिङ परीक्षाको तयारी।</p>
-</div>
-
-<div class="card">
-<h3>✈️ वैदेशिक रोजगारी</h3>
-<p>विदेशी जागिर, अन्तर्वार्ता, CV र भाषा अभ्यास।</p>
-</div>
-
-<div class="card">
-<h3>💻 डिजिटल सीप</h3>
-<p>कम्प्युटर, IT, डिजिटल मार्केटिङ र प्रविधि शिक्षा।</p>
-</div>
-
-<div class="card">
-<h3>🤖 AI शिक्षक</h3>
-<p>प्रश्न सोध्ने, उत्तर बुझ्ने र व्यक्तिगत अध्ययनमा सहयोग।</p>
-</div>
-
-</div>
-</section>
+<main class="container" id="departments">
+<h2 class="section-title">📚 हाम्रा शैक्षिक विभागहरू</h2>
+<p class="count" id="count"></p>
+<div class="grid" id="departmentList"></div>
+<p id="noResult" style="display:none;text-align:center">माफ गर्नुहोस्, यो विभाग भेटिएन।</p>
+</main>
 
 <section class="container" id="about">
+<div class="info">
 <h2>हाम्रो उद्देश्य</h2>
-<p style="text-align:center;line-height:1.8">
-GYAN SANSAR KNOWLEDGE HUB सबै उमेर र वर्गका मानिसलाई
-सुलभ, गुणस्तरीय र व्यवहारिक शिक्षा प्रदान गर्ने उद्देश्यले
-निर्माण हुँदै गरेको डिजिटल शैक्षिक प्लेटफर्म हो।
-</p>
+<p>GYAN SANSAR KNOWLEDGE HUB सबै उमेर र वर्गका मानिसलाई सुलभ, गुणस्तरीय र व्यवहारिक शिक्षा प्रदान गर्ने उद्देश्यले निर्माण हुँदै गरेको डिजिटल शैक्षिक प्लेटफर्म हो।</p>
+<p>हाम्रो लक्ष्य ज्ञान, सीप, प्रविधि र अवसरलाई एउटै डिजिटल प्लेटफर्ममा जोड्नु हो।</p>
+</div>
 </section>
 
 <section class="container" id="contact">
-<h2>सम्पर्क</h2>
-<p style="text-align:center">GYAN SANSAR KNOWLEDGE HUB</p>
-<p style="text-align:center">LEARN • GROW • SUCCEED</p>
+<div class="info">
+<h2>📩 सम्पर्क</h2>
+<p><strong>GYAN SANSAR KNOWLEDGE HUB</strong></p>
+<p>LEARN • GROW • SUCCEED</p>
+<p>सुझाव तथा सहकार्यका लागि हामीलाई सम्पर्क गर्नुहोस्।</p>
+</div>
 </section>
 
 <footer>
-<p>© 2026 GYAN SANSAR KNOWLEDGE HUB</p>
+<strong>🌍 GYAN SANSAR KNOWLEDGE HUB</strong>
 <p>ज्ञान सबैका लागि, शिक्षा जीवनका लागि।</p>
+<p>© 2026 GYAN SANSAR KNOWLEDGE HUB</p>
 </footer>
 
+<script>
+// भविष्यमा नयाँ विभाग थप्न यही सूचीमा नयाँ वस्तु थप्नुहोस्।
+const departments = [
+["📚","विद्यालय शिक्षा","कक्षा १ देखि १२, SEE तथा +2 अध्ययन सामग्री।"],
+["🎓","उच्च शिक्षा","BBS, BBA, BA, BSc, BEd तथा MBA।"],
+["🌐","भाषा शिक्षा","अंग्रेजी, नेपाली, रोमानियन तथा अन्य विश्व भाषा।"],
+["📝","लोकसेवा तयारी","लोकसेवा परीक्षा र सरकारी सेवाको तयारी।"],
+["👨‍🏫","शिक्षक सेवा","शिक्षक लाइसेन्स तथा शिक्षक सेवा आयोग तयारी।"],
+["👮","प्रहरी तथा सेना","नेपाल प्रहरी, सेना तथा सशस्त्र प्रहरी तयारी।"],
+["🏦","बैंकिङ तथा वित्त","बैंकिङ परीक्षा, वित्तीय ज्ञान र लेखा।"],
+["🌍","सामान्य ज्ञान","इतिहास, भूगोल, विज्ञान तथा समसामयिक विषय।"],
+["✈️","वैदेशिक रोजगारी","विदेशी रोजगार, प्रक्रिया र आवश्यक जानकारी।"],
+["💼","करियर विकास","CV, अन्तर्वार्ता र रोजगारी सीप।"],
+["💻","कम्प्युटर तथा IT","कम्प्युटर आधारभूत ज्ञान, IT र प्रोग्रामिङ।"],
+["📱","मोबाइल तथा प्रविधि","मोबाइल, डिजिटल उपकरण र प्रविधि सीप।"],
+["📢","डिजिटल मार्केटिङ","Social Media, SEO र Online Marketing।"],
+["🔧","प्राविधिक सीप","इलेक्ट्रिसियन, प्लम्बिङ, वेल्डिङ आदि।"],
+["🌱","कृषि तथा पशुपालन","आधुनिक कृषि, खेती र पशुपालन।"],
+["🏨","होटल तथा पर्यटन","Hospitality, पर्यटन र होटल व्यवस्थापन।"],
+["🍳","खाना तथा बेकरी","पाककला, बेकरी र खाद्य सुरक्षा।"],
+["🩺","स्वास्थ्य शिक्षा","स्वास्थ्य सचेतना, प्राथमिक उपचार र सरसफाइ।"],
+["🏢","व्यवसाय तथा उद्यम","व्यवसाय सञ्चालन र उद्यमशीलता।"],
+["📊","व्यवस्थापन तथा लेखा","Accounting, Management र Office Skills।"],
+["⚖️","कानुन तथा संविधान","कानुनी ज्ञान, नागरिक अधिकार र संविधान।"],
+["🔬","विज्ञान तथा अनुसन्धान","विज्ञान, प्रयोग र अनुसन्धान।"],
+["➗","गणित तथा IQ","गणित, तर्कशक्ति र मानसिक क्षमता।"],
+["🎨","कला तथा डिजाइन","Graphic Design, Photography र Video Editing।"],
+["📰","पत्रकारिता तथा सञ्चार","पत्रकारिता, लेखन र सञ्चार सीप।"],
+["🧵","सिलाइ तथा हस्तकला","Tailoring, सिलाइ र घरेलु सीप।"],
+["⚽","खेलकुद तथा फिटनेस","खेलकुद, व्यायाम र शारीरिक तन्दुरुस्ती।"],
+["🤖","AI तथा आधुनिक प्रविधि","Artificial Intelligence र नयाँ प्रविधि।"],
+["📖","डिजिटल पुस्तकालय","ई-पुस्तक, नोट्स र अध्ययन सामग्री।"],
+["🏆","परीक्षा तथा क्विज","Online Quiz, परीक्षा अभ्यास र प्रमाणपत्र।"]
+];
+
+function showDepartments(items){
+ const list=document.getElementById("departmentList");
+ list.innerHTML="";
+ items.forEach((item,index)=>{
+  const card=document.createElement("div");
+  card.className="card";
+  const heading=document.createElement("h3");
+  heading.textContent=item[0]+" "+(index+1)+". "+item[1];
+  const description=document.createElement("p");
+  description.textContent=item[2];
+  const button=document.createElement("button");
+  button.textContent="थप जानकारी";
+  button.onclick=()=>alert(item[1]+" विभागको पाठ्यक्रम चाँडै उपलब्ध हुनेछ।");
+  card.append(heading,description,button);
+  list.appendChild(card);
+ });
+ document.getElementById("count").textContent="हाल उपलब्ध मुख्य विभागहरू: "+items.length;
+ document.getElementById("noResult").style.display=items.length?"none":"block";
+}
+
+function searchDepartments(){
+ const query=document.getElementById("search").value.toLowerCase().trim();
+ const filtered=departments.filter(item=>item.join(" ").toLowerCase().includes(query));
+ showDepartments(filtered);
+}
+
+showDepartments(departments);
+</script>
 </body>
 </html>
