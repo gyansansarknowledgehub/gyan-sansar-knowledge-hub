@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gyan Sansar - ज्ञान संसार</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#f3f6fc;
+ color:#222;
+}
+header{
+ background:#123c69;
+ color:white;
+ padding:25px 15px;
+ text-align:center;
+}
+header h1{margin:0;font-size:30px}
+nav{
+ background:#092b4c;
+ padding:14px;
+ text-align:center;
+}
+nav a{
+ color:white;
+ text-decoration:none;
+ margin:10px;
+}
+.hero{
+ text-align:center;
+ padding:45px 15px;
+ background:#dceaff;
+}
+.hero h2{color:#123c69}
+input{
+ padding:13px;
+ width:85%;
+ max-width:450px;
+ border:1px solid #aaa;
+ border-radius:8px;
+}
+.container{padding:20px;max-width:1000px;margin:auto}
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+ gap:18px;
+}
+.card{
+ background:white;
+ padding:22px;
+ border-radius:12px;
+ box-shadow:0 2px 8px #ddd;
+ text-align:center;
+}
+.card h3{color:#123c69}
+.card a{color:#0874ce;text-decoration:none}
+footer{
+ background:#123c69;
+ color:white;
+ text-align:center;
+ padding:20px;
+ margin-top:30px;
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>🌍 ज्ञान संसार</h1>
+<p>ज्ञान, शिक्षा र जानकारीको साझा संसार</p>
+</header>
+
+<nav>
+<a href="#home">गृहपृष्ठ</a>
+<a href="#subjects">विषयहरू</a>
+<a href="#about">हाम्रो बारेमा</a>
+</nav>
+
+<section class="hero" id="home">
+<h2>ज्ञान संसारमा स्वागत छ!</h2>
+<p>नयाँ कुरा सिकौँ, ज्ञान बढाऔँ र अगाडि बढौँ।</p>
+<input type="text" id="search" placeholder="आफूले खोजेको विषय लेख्नुहोस्...">
+</section>
+
+<section class="container" id="subjects">
+<h2>📚 हाम्रा विषयहरू</h2>
+<div class="grid" id="cards">
+
+<div class="card">
+<h3>📖 नेपाली शिक्षा</h3>
+<p>नेपाली भाषा, व्याकरण र साहित्य।</p>
+<a href="#">थप पढ्नुहोस्</a>
+</div>
+
+<div class="card">
+<h3>🔬 विज्ञान</h3>
+<p>विज्ञान र प्रविधिसम्बन्धी ज्ञान।</p>
+<a href="#">थप पढ्नुहोस्</a>
+</div>
+
+<div class="card">
+<h3>🌏 सामान्य ज्ञान</h3>
+<p>रोचक तथ्य र महत्वपूर्ण जानकारी।</p>
+<a href="#">थप पढ्नुहोस्</a>
+</div>
+
+<div class="card">
+<h3>💻 कम्प्युटर शिक्षा</h3>
+<p>कम्प्युटर र डिजिटल प्रविधिको ज्ञान।</p>
+<a href="#">थप पढ्नुहोस्</a>
+</div>
+
+<div class="card">
+<h3>📝 प्रश्नोत्तर</h3>
+<p>आफ्नो ज्ञान जाँच गर्ने अभ्यास।</p>
+<a href="#">थप पढ्नुहोस्</a>
+</div>
+
+<div class="card">
+<h3>🎓 शैक्षिक सामग्री</h3>
+<p>विद्यार्थीका लागि उपयोगी नोटहरू।</p>
+<a href="#">थप पढ्नुहोस्</a>
+</div>
+
+</div>
+</section>
+
+<section class="container" id="about">
+<h2>हाम्रो बारेमा</h2>
+<p>ज्ञान संसार एउटा शैक्षिक तथा ज्ञानमूलक प्लेटफर्म हो। यहाँ विद्यार्थी र ज्ञानप्रेमीहरूले विभिन्न विषयका जानकारी प्राप्त गर्न सक्छन्।</p>
+</section>
+
+<footer>
+<p>© 2026 Gyan Sansar | ज्ञान संसार</p>
+<p>ज्ञान नै शक्ति हो।</p>
+</footer>
+
+<script>
+document.getElementById("search").addEventListener("input",function(){
+ let value=this.value.toLowerCase();
+ document.querySelectorAll(".card").forEach(card=>{
+  card.style.display=card.innerText.toLowerCase().includes(value)?"block":"none";
+ });
+});
+</script>
+
+</body>
+</html>
