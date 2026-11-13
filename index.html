@@ -3,38 +3,32 @@
 <html lang="ne">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#102b55">
 <title>GYAN SANSAR KNOWLEDGE HUB</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,"Noto Sans Devanagari",sans-serif;background:#f4f7fc;color:#17243a}
-header{background:#102b55;color:white;text-align:center;padding:28px 15px}
-header h1{margin:0;font-size:30px}
-header h2{margin:5px 0;color:#ffca55}
-header p{margin:8px 0}
-nav{background:#173d70;padding:13px;text-align:center;position:sticky;top:0;z-index:5}
-nav a{color:white;text-decoration:none;margin:0 10px;font-weight:bold}
-.hero{text-align:center;padding:40px 15px;background:linear-gradient(120deg,#e4edff,#fff4dc)}
-.hero h2{color:#102b55;font-size:27px}
-.hero p{line-height:1.8}
-.search{width:90%;max-width:600px;padding:14px;border:1px solid #ccd5e3;border-radius:10px;font-size:16px;margin:15px auto;display:block}
-.container{max-width:1150px;margin:auto;padding:25px 15px}
-.section-title{text-align:center;color:#102b55}
-.count{text-align:center;color:#52627a}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
-.card{background:white;padding:20px;border-radius:13px;box-shadow:0 3px 12px #17243a12;border:1px solid #e5eaf2}
-.card h3{color:#173d70;margin-top:0}
-.card p{line-height:1.7;color:#52627a}
-.card button{background:#173d70;color:white;border:0;padding:10px 15px;border-radius:7px;cursor:pointer}
-.card button:hover{background:#e39b22}
-.info{background:white;padding:25px;border-radius:12px;line-height:1.8}
-footer{background:#102b55;color:white;text-align:center;padding:25px;margin-top:30px}
-a{color:inherit}
+header,footer{background:#102b55;color:white;text-align:center;padding:25px 12px}
+header h1{margin:0}
+header h2{color:#ffca55;margin:5px}
+nav{background:#173d70;padding:13px;text-align:center;position:sticky;top:0}
+nav a{color:white;text-decoration:none;margin:8px;font-weight:bold}
+.hero{text-align:center;padding:30px 12px;background:linear-gradient(120deg,#e4edff,#fff4dc)}
+.container{max-width:1100px;margin:auto;padding:20px 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}
+.card,.panel{background:white;padding:18px;border-radius:12px;box-shadow:0 3px 12px #17243a12;margin-bottom:12px}
+.card h3{color:#173d70}
+input,button{padding:12px;border-radius:8px;font-size:15px;margin:5px 0}
+input{width:100%;border:1px solid #ccd5e3}
+button{background:#173d70;color:white;border:0;cursor:pointer}
+button:hover{background:#e39b22}
+.hidden{display:none}
+#message{padding:10px;color:#173d70}
+.small{color:#64748b;font-size:13px}
 </style>
 </head>
 <body>
-
 <header>
 <h1>🌍 GYAN SANSAR</h1>
 <h2>KNOWLEDGE HUB</h2>
@@ -45,109 +39,218 @@ a{color:inherit}
 <nav>
 <a href="#home">गृहपृष्ठ</a>
 <a href="#departments">विभागहरू</a>
+<a href="#account">विद्यार्थी खाता</a>
 <a href="#about">हाम्रो बारेमा</a>
-<a href="#contact">सम्पर्क</a>
 </nav>
 
 <section class="hero" id="home">
 <h2>ज्ञान नै सबैभन्दा ठूलो शक्ति हो</h2>
-<p>नेपालदेखि विश्वसम्म, सबैका लागि शिक्षा, सीप र ज्ञानको साझा डिजिटल प्लेटफर्म।<br>आज सिकौँ, भोलि सफल बनौँ!</p>
-<strong>आफूलाई चाहिएको विषय खोज्नुहोस्</strong>
-<input class="search" id="search" type="search" placeholder="🔍 विभाग वा विषय खोज्नुहोस्..." oninput="searchDepartments()">
+<p>नेपालदेखि विश्वसम्म, सबैका लागि शिक्षा, सीप र ज्ञान।</p>
+<input id="search" placeholder="🔍 विभाग खोज्नुहोस्..." oninput="searchDepartments()">
 </section>
 
 <main class="container" id="departments">
-<h2 class="section-title">📚 हाम्रा शैक्षिक विभागहरू</h2>
-<p class="count" id="count"></p>
+<h2 style="text-align:center">📚 हाम्रा ३० शैक्षिक विभाग</h2>
+<p id="count"></p>
 <div class="grid" id="departmentList"></div>
-<p id="noResult" style="display:none;text-align:center">माफ गर्नुहोस्, यो विभाग भेटिएन।</p>
 </main>
 
-<section class="container" id="about">
-<div class="info">
-<h2>हाम्रो उद्देश्य</h2>
-<p>GYAN SANSAR KNOWLEDGE HUB सबै उमेर र वर्गका मानिसलाई सुलभ, गुणस्तरीय र व्यवहारिक शिक्षा प्रदान गर्ने उद्देश्यले निर्माण हुँदै गरेको डिजिटल शैक्षिक प्लेटफर्म हो।</p>
-<p>हाम्रो लक्ष्य ज्ञान, सीप, प्रविधि र अवसरलाई एउटै डिजिटल प्लेटफर्ममा जोड्नु हो।</p>
+<section class="container" id="account">
+<div class="panel">
+<h2>👨‍🎓 विद्यार्थी खाता</h2>
+<p>नयाँ विद्यार्थीले खाता खोल्नुहोस् वा पहिलेको खाताबाट Login गर्नुहोस्।</p>
+
+<div id="registerBox">
+<h3>नयाँ Registration</h3>
+<input id="regName" placeholder="पूरा नाम">
+<input id="regEmail" type="email" placeholder="Email">
+<input id="regPassword" type="password" placeholder="Password (कम्तीमा ६ अक्षर)">
+<button onclick="register()">Registration गर्नुहोस्</button>
+</div>
+
+<hr>
+
+<div id="loginBox">
+<h3>विद्यार्थी Login</h3>
+<input id="loginEmail" type="email" placeholder="Email">
+<input id="loginPassword" type="password" placeholder="Password">
+<button onclick="login()">Login गर्नुहोस्</button>
+</div>
+
+<div id="studentBox" class="hidden">
+<h3>🎓 विद्यार्थी Dashboard</h3>
+<p id="studentName"></p>
+<h3>📚 उपलब्ध पाठ्यक्रम</h3>
+<div id="courseList"></div>
+<button onclick="logout()">Logout</button>
+</div>
+<p id="message"></p>
+<p class="small">खाता खोल्दा इमेल पुष्टि गर्नुपर्ने हुन सक्छ। आफ्नो इमेल Inbox जाँच गर्नुहोस्।</p>
 </div>
 </section>
 
-<section class="container" id="contact">
-<div class="info">
-<h2>📩 सम्पर्क</h2>
-<p><strong>GYAN SANSAR KNOWLEDGE HUB</strong></p>
-<p>LEARN • GROW • SUCCEED</p>
-<p>सुझाव तथा सहकार्यका लागि हामीलाई सम्पर्क गर्नुहोस्।</p>
+<section class="container" id="about">
+<div class="panel">
+<h2>हाम्रो उद्देश्य</h2>
+<p>GYAN SANSAR KNOWLEDGE HUB सबै उमेरका मानिसलाई सुलभ, गुणस्तरीय र व्यवहारिक शिक्षा प्रदान गर्ने डिजिटल शैक्षिक प्लेटफर्म हो।</p>
 </div>
 </section>
 
 <footer>
 <strong>🌍 GYAN SANSAR KNOWLEDGE HUB</strong>
 <p>ज्ञान सबैका लागि, शिक्षा जीवनका लागि।</p>
-<p>© 2026 GYAN SANSAR KNOWLEDGE HUB</p>
+<p>© 2026 GYAN SANSAR</p>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-// भविष्यमा नयाँ विभाग थप्न यही सूचीमा नयाँ वस्तु थप्नुहोस्।
+const SUPABASE_URL = "https://dlqvkyhpynunpptaywal.supabase.co";
+const SUPABASE_KEY = "sb_publishable_DY4fyCutBkuejKbPpqePXw_l-G_Okzv";
+const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
 const departments = [
 ["📚","विद्यालय शिक्षा","कक्षा १ देखि १२, SEE तथा +2 अध्ययन सामग्री।"],
 ["🎓","उच्च शिक्षा","BBS, BBA, BA, BSc, BEd तथा MBA।"],
-["🌐","भाषा शिक्षा","अंग्रेजी, नेपाली, रोमानियन तथा अन्य विश्व भाषा।"],
+["🌐","भाषा शिक्षा","अंग्रेजी, नेपाली, रोमानियन तथा अन्य भाषा।"],
 ["📝","लोकसेवा तयारी","लोकसेवा परीक्षा र सरकारी सेवाको तयारी।"],
-["👨‍🏫","शिक्षक सेवा","शिक्षक लाइसेन्स तथा शिक्षक सेवा आयोग तयारी।"],
-["👮","प्रहरी तथा सेना","नेपाल प्रहरी, सेना तथा सशस्त्र प्रहरी तयारी।"],
-["🏦","बैंकिङ तथा वित्त","बैंकिङ परीक्षा, वित्तीय ज्ञान र लेखा।"],
+["👨‍🏫","शिक्षक सेवा","शिक्षक लाइसेन्स तथा शिक्षक सेवा आयोग।"],
+["👮","प्रहरी तथा सेना","प्रहरी, सेना तथा सशस्त्र प्रहरी तयारी।"],
+["🏦","बैंकिङ तथा वित्त","बैंकिङ परीक्षा र वित्तीय ज्ञान।"],
 ["🌍","सामान्य ज्ञान","इतिहास, भूगोल, विज्ञान तथा समसामयिक विषय।"],
-["✈️","वैदेशिक रोजगारी","विदेशी रोजगार, प्रक्रिया र आवश्यक जानकारी।"],
+["✈️","वैदेशिक रोजगारी","विदेशी रोजगार र आवश्यक जानकारी।"],
 ["💼","करियर विकास","CV, अन्तर्वार्ता र रोजगारी सीप।"],
-["💻","कम्प्युटर तथा IT","कम्प्युटर आधारभूत ज्ञान, IT र प्रोग्रामिङ।"],
-["📱","मोबाइल तथा प्रविधि","मोबाइल, डिजिटल उपकरण र प्रविधि सीप।"],
+["💻","कम्प्युटर तथा IT","कम्प्युटर, IT र प्रोग्रामिङ।"],
+["📱","मोबाइल तथा प्रविधि","मोबाइल र प्रविधि सीप।"],
 ["📢","डिजिटल मार्केटिङ","Social Media, SEO र Online Marketing।"],
-["🔧","प्राविधिक सीप","इलेक्ट्रिसियन, प्लम्बिङ, वेल्डिङ आदि।"],
-["🌱","कृषि तथा पशुपालन","आधुनिक कृषि, खेती र पशुपालन।"],
-["🏨","होटल तथा पर्यटन","Hospitality, पर्यटन र होटल व्यवस्थापन।"],
+["🔧","प्राविधिक सीप","इलेक्ट्रिसियन, प्लम्बिङ, वेल्डिङ।"],
+["🌱","कृषि तथा पशुपालन","आधुनिक कृषि र पशुपालन।"],
+["🏨","होटल तथा पर्यटन","Hospitality र होटल व्यवस्थापन।"],
 ["🍳","खाना तथा बेकरी","पाककला, बेकरी र खाद्य सुरक्षा।"],
-["🩺","स्वास्थ्य शिक्षा","स्वास्थ्य सचेतना, प्राथमिक उपचार र सरसफाइ।"],
-["🏢","व्यवसाय तथा उद्यम","व्यवसाय सञ्चालन र उद्यमशीलता।"],
-["📊","व्यवस्थापन तथा लेखा","Accounting, Management र Office Skills।"],
-["⚖️","कानुन तथा संविधान","कानुनी ज्ञान, नागरिक अधिकार र संविधान।"],
-["🔬","विज्ञान तथा अनुसन्धान","विज्ञान, प्रयोग र अनुसन्धान।"],
-["➗","गणित तथा IQ","गणित, तर्कशक्ति र मानसिक क्षमता।"],
-["🎨","कला तथा डिजाइन","Graphic Design, Photography र Video Editing।"],
-["📰","पत्रकारिता तथा सञ्चार","पत्रकारिता, लेखन र सञ्चार सीप।"],
-["🧵","सिलाइ तथा हस्तकला","Tailoring, सिलाइ र घरेलु सीप।"],
-["⚽","खेलकुद तथा फिटनेस","खेलकुद, व्यायाम र शारीरिक तन्दुरुस्ती।"],
-["🤖","AI तथा आधुनिक प्रविधि","Artificial Intelligence र नयाँ प्रविधि।"],
-["📖","डिजिटल पुस्तकालय","ई-पुस्तक, नोट्स र अध्ययन सामग्री।"],
-["🏆","परीक्षा तथा क्विज","Online Quiz, परीक्षा अभ्यास र प्रमाणपत्र।"]
+["🩺","स्वास्थ्य शिक्षा","स्वास्थ्य सचेतना र प्राथमिक उपचार।"],
+["🏢","व्यवसाय तथा उद्यम","व्यवसाय र उद्यमशीलता।"],
+["📊","व्यवस्थापन तथा लेखा","Accounting र Management।"],
+["⚖️","कानुन तथा संविधान","कानुनी ज्ञान र नागरिक अधिकार।"],
+["🔬","विज्ञान तथा अनुसन्धान","विज्ञान र अनुसन्धान।"],
+["➗","गणित तथा IQ","गणित र तर्कशक्ति।"],
+["🎨","कला तथा डिजाइन","Graphic Design र Photography।"],
+["📰","पत्रकारिता तथा सञ्चार","पत्रकारिता, लेखन र सञ्चार।"],
+["🧵","सिलाइ तथा हस्तकला","Tailoring र घरेलु सीप।"],
+["⚽","खेलकुद तथा फिटनेस","खेलकुद र शारीरिक तन्दुरुस्ती।"],
+["🤖","AI तथा आधुनिक प्रविधि","Artificial Intelligence।"],
+["📖","डिजिटल पुस्तकालय","ई-पुस्तक र अध्ययन सामग्री।"],
+["🏆","परीक्षा तथा क्विज","Online Quiz र परीक्षा अभ्यास।"]
 ];
 
 function showDepartments(items){
  const list=document.getElementById("departmentList");
  list.innerHTML="";
- items.forEach((item,index)=>{
+ items.forEach((item,i)=>{
   const card=document.createElement("div");
   card.className="card";
-  const heading=document.createElement("h3");
-  heading.textContent=item[0]+" "+(index+1)+". "+item[1];
-  const description=document.createElement("p");
-  description.textContent=item[2];
-  const button=document.createElement("button");
-  button.textContent="थप जानकारी";
-  button.onclick=()=>alert(item[1]+" विभागको पाठ्यक्रम चाँडै उपलब्ध हुनेछ।");
-  card.append(heading,description,button);
+  const h=document.createElement("h3");
+  h.textContent=item[0]+" "+item[1];
+  const p=document.createElement("p");
+  p.textContent=item[2];
+  card.append(h,p);
   list.appendChild(card);
  });
- document.getElementById("count").textContent="हाल उपलब्ध मुख्य विभागहरू: "+items.length;
- document.getElementById("noResult").style.display=items.length?"none":"block";
+ document.getElementById("count").textContent="उपलब्ध विभाग: "+items.length;
+}
+function searchDepartments(){
+ const q=document.getElementById("search").value.toLowerCase();
+ showDepartments(departments.filter(x=>x.join(" ").toLowerCase().includes(q)));
 }
 
-function searchDepartments(){
- const query=document.getElementById("search").value.toLowerCase().trim();
- const filtered=departments.filter(item=>item.join(" ").toLowerCase().includes(query));
- showDepartments(filtered);
+function message(text){
+ document.getElementById("message").textContent=text;
+}
+
+async function register(){
+ const name=document.getElementById("regName").value.trim();
+ const email=document.getElementById("regEmail").value.trim();
+ const password=document.getElementById("regPassword").value;
+ if(!name||!email||password.length<6){
+  message("नाम, सही Email र कम्तीमा ६ अक्षरको Password राख्नुहोस्।");
+  return;
+ }
+ message("खाता बनाउँदै...");
+ const {data,error}=await db.auth.signUp({
+  email,password,
+  options:{data:{full_name:name}}
+ });
+ if(error){message(error.message);return;}
+ if(data.session){
+  await saveProfile(name);
+  message("Registration सफल भयो!");
+  await showStudent();
+ }else{
+  message("Registration भयो। आफ्नो Email खोलेर पुष्टि गर्नुहोस्, त्यसपछि Login गर्नुहोस्।");
+ }
+}
+
+async function login(){
+ const email=document.getElementById("loginEmail").value.trim();
+ const password=document.getElementById("loginPassword").value;
+ message("Login हुँदैछ...");
+ const {data,error}=await db.auth.signInWithPassword({email,password});
+ if(error){message(error.message);return;}
+ const name=data.user.user_metadata?.full_name||"विद्यार्थी";
+ await saveProfile(name);
+ message("Login सफल भयो!");
+ await showStudent();
+}
+
+async function saveProfile(name){
+ const {data}=await db.auth.getUser();
+ if(!data.user)return;
+ const {error}=await db.from("profiles").upsert({
+  id:data.user.id,full_name:name
+ });
+ if(error)message("Profile save हुन सकेन: "+error.message);
+}
+
+async function showStudent(){
+ const {data,error}=await db.auth.getUser();
+ if(error||!data.user)return;
+ document.getElementById("registerBox").classList.add("hidden");
+ document.getElementById("loginBox").classList.add("hidden");
+ document.getElementById("studentBox").classList.remove("hidden");
+ const name=data.user.user_metadata?.full_name||data.user.email;
+ document.getElementById("studentName").textContent="स्वागत छ, "+name;
+ await loadCourses();
+}
+
+async function loadCourses(){
+ const box=document.getElementById("courseList");
+ box.textContent="पाठ्यक्रम लोड हुँदैछ...";
+ const {data,error}=await db.from("courses").select("id,title,description");
+ if(error){box.textContent="पाठ्यक्रम लोड भएन: "+error.message;return;}
+ box.innerHTML="";
+ if(!data.length){box.textContent="अहिले पाठ्यक्रम उपलब्ध छैन।";return;}
+ data.forEach(c=>{
+  const div=document.createElement("div");
+  div.className="card";
+  const h=document.createElement("h3");
+  h.textContent=c.title;
+  const p=document.createElement("p");
+  p.textContent=c.description||"";
+  div.append(h,p);
+  box.appendChild(div);
+ });
+}
+
+async function logout(){
+ await db.auth.signOut();
+ document.getElementById("studentBox").classList.add("hidden");
+ document.getElementById("registerBox").classList.remove("hidden");
+ document.getElementById("loginBox").classList.remove("hidden");
+ message("Logout भयो।");
 }
 
 showDepartments(departments);
+db.auth.getSession().then(({data})=>{
+ if(data.session)showStudent();
+});
 </script>
 </body>
 </html>
