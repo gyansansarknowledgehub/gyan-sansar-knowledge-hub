@@ -3,68 +3,138 @@
 <html lang="ne">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>World Languages | GYAN SANSAR</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#102b55">
+<title>World Languages | GYAN SANSAR KNOWLEDGE HUB</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f1f5fb;color:#17243a}
-header{background:#123b75;color:white;text-align:center;padding:24px 12px}
-header h1{font-size:23px}
-main{max-width:850px;margin:auto;padding:14px}
-.card{background:white;padding:17px;border-radius:13px;margin:13px 0;box-shadow:0 2px 10px #0001}
+body{margin:0;font-family:Arial,"Noto Sans Devanagari",sans-serif;background:#f1f5fb;color:#17243a}
+header{background:linear-gradient(120deg,#102b55,#2362a5);color:white;text-align:center;padding:28px 12px}
+header h1{margin:8px 0}
+main{max-width:1000px;margin:auto;padding:15px}
+.card{background:white;padding:18px;border-radius:14px;margin:14px 0;box-shadow:0 3px 14px #17243a12}
 h2{color:#123b75}
-input,select{width:100%;padding:13px;border:1px solid #ccd5e2;border-radius:8px;margin:8px 0;font-size:16px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
-button{padding:12px;border:0;border-radius:8px;background:#e8effb;color:#123b75;font-size:15px}
-button.active{background:#123b75;color:white}
-.lesson{padding:12px 0;border-bottom:1px solid #eee}
-.small{color:#68758a;font-size:13px}
-footer{text-align:center;padding:20px;color:#68758a}
+input,select{width:100%;padding:13px;border:1px solid #ccd5e2;border-radius:9px;margin:8px 0;font-size:16px}
+button{padding:11px 14px;border:0;border-radius:9px;background:#e8effb;color:#123b75;font-size:15px;cursor:pointer;margin:4px}
+button:hover{background:#d3e2fa}
+button.active,.primary{background:#123b75;color:white}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:8px}
+.lesson{padding:13px 0;border-bottom:1px solid #e5eaf1}
+.lesson strong{font-size:17px;color:#123b75}
+.small{color:#64748b;font-size:13px}
+.tag{display:inline-block;background:#e8effb;color:#123b75;padding:5px 9px;border-radius:20px;font-size:12px}
+.progress{height:10px;background:#e5eaf1;border-radius:20px;overflow:hidden}
+#progressBar{height:100%;width:0;background:#1c9b69}
+footer{text-align:center;padding:25px;color:#64748b}
+a{color:#123b75}
 </style>
 </head>
 <body>
+
 <header>
-<div style="font-size:38px">🌍📚</div>
+<div style="font-size:42px">🌍📚</div>
 <h1>GYAN SANSAR KNOWLEDGE HUB</h1>
-<p>WORLD LANGUAGES LEARNING CENTER</p>
+<h3>WORLD LANGUAGES LEARNING CENTER</h3>
 <p>ज्ञान सबैका लागि, शिक्षा जीवनका लागि।</p>
+<p>LEARN • GROW • SUCCEED</p>
 </header>
+
 <main>
 <section class="card">
-<h2>🌐 भाषा छान्नुहोस्</h2>
-<p>नेपाली माध्यमबाट संसारका भाषा सिक्नुहोस्।</p>
-<input id="search" placeholder="भाषा खोज्नुहोस्..." oninput="showLanguages()">
+<h2>🌐 संसारका भाषा छान्नुहोस्</h2>
+<p>नेपाली माध्यमबाट विभिन्न देशका भाषा सिक्नुहोस्।</p>
+<input id="search" placeholder="🔍 भाषा खोज्नुहोस्..." oninput="showLanguages()">
+<p id="total" class="small"></p>
 <div class="grid" id="languages"></div>
-<p class="small" id="total"></p>
 </section>
+
 <section class="card">
-<h2 id="title">🇭🇷 Croatian भाषा</h2>
-<p id="info">नेपाली अर्थ र उच्चारणसहित सिक्नुहोस्।</p>
+<h2 id="courseTitle">🇭🇷 Croatian भाषा</h2>
+<p id="courseInfo">नेपाली अर्थ, उच्चारण र अभ्याससहित भाषा सिक्नुहोस्।</p>
+
+<label for="level"><b>📘 आफ्नो तह छान्नुहोस्</b></label>
 <select id="level" onchange="showCourse()">
-<option>A1 - Beginner</option><option>A2 - Elementary</option>
-<option>B1 - Intermediate</option><option>B2 - Upper Intermediate</option>
-<option>C1 - Advanced</option><option>C2 - Proficient</option>
+<option value="A1">A1 - Beginner (सुरुवाती)</option>
+<option value="A2">A2 - Elementary (आधारभूत)</option>
+<option value="B1">B1 - Intermediate (मध्यम)</option>
+<option value="B2">B2 - Upper Intermediate</option>
+<option value="C1">C1 - Advanced (उन्नत)</option>
+<option value="C2">C2 - Proficient (विशेषज्ञ)</option>
 </select>
+
+<div class="tag" id="levelTag">A1 Beginner</div>
 <div id="course"></div>
 </section>
+
 <section class="card">
-<h2>📝 अभ्यास प्रश्न</h2>
-<p>क्रोएसियन भाषामा Hvala को अर्थ के हो?</p>
-<div id="quiz">
-<button onclick="check(false)">नमस्कार</button>
-<button onclick="check(true)">धन्यवाद</button>
-<button onclick="check(false)">शुभ प्रभात</button>
-</div>
-<p id="result"></p>
+<h2>📈 मेरो सिकाइ प्रगति</h2>
+<p id="progressText">पूरा भएका पाठ: 0</p>
+<div class="progress"><div id="progressBar"></div></div>
+<p class="small">तपाईंले पूरा गरेका पाठ यस फोनको ब्राउजरमा सुरक्षित हुन्छन्।</p>
+<button onclick="resetProgress()">प्रगति रिसेट गर्नुहोस्</button>
 </section>
+
+<section class="card">
+<h2>📝 ज्ञान परीक्षण (Quiz)</h2>
+<p id="quizQuestion"></p>
+<div id="quizOptions"></div>
+<p id="quizResult"></p>
+</section>
+
+<section class="card">
+<h2>🎯 हाम्रो भाषा शिक्षा प्रणाली</h2>
+<p>हरेक भाषामा निम्न विषयहरू समावेश गर्ने गरी पाठ्यक्रम विस्तार गरिनेछ:</p>
+<ul>
+<li>शब्दभण्डार र नेपाली अर्थ</li>
+<li>नेपाली लिपिमा उच्चारण</li>
+<li>दैनिक बोलचाल र संवाद</li>
+<li>व्याकरण र वाक्य निर्माण</li>
+<li>सुन्ने र बोल्ने अभ्यास</li>
+<li>पढ्ने र लेख्ने अभ्यास</li>
+<li>अध्यायगत Quiz र परीक्षा</li>
+<li>A1 देखि C2 सम्मको पाठ्यक्रम</li>
+</ul>
+</section>
+
+<p><a href="index.html">← मुख्य गृहपृष्ठमा फर्कनुहोस्</a></p>
 </main>
+
 <footer>
-<strong>GYAN SANSAR KNOWLEDGE HUB</strong>
-<p>LEARN • GROW • SUCCEED</p>
+<strong>🌍 GYAN SANSAR KNOWLEDGE HUB</strong>
+<p>ज्ञान सबैका लागि, शिक्षा जीवनका लागि।</p>
+<p>© 2026 GYAN SANSAR</p>
 </footer>
+
 <script>
-const list=`Croatian,Romanian,English,German,Italian,French,Spanish,Portuguese,Dutch,Polish,Czech,Slovak,Slovenian,Hungarian,Greek,Swedish,Norwegian,Danish,Finnish,Russian,Ukrainian,Albanian,Bosnian,Serbian,Macedonian,Bulgarian,Estonian,Latvian,Lithuanian,Icelandic,Irish,Welsh,Maltese,Turkish,Arabic,Hebrew,Persian,Armenian,Georgian,Azerbaijani,Kazakh,Uzbek,Kyrgyz,Tajik,Turkmen,Mongolian,Hindi,Nepali,Bengali,Urdu,Punjabi,Gujarati,Marathi,Tamil,Telugu,Kannada,Malayalam,Sinhala,Chinese,Japanese,Korean,Thai,Vietnamese,Indonesian,Malay,Filipino,Burmese,Khmer,Lao,Pashto,Dari,Kurdish,Swahili,Amharic,Somali,Hausa,Yoruba,Igbo,Zulu,Xhosa,Afrikaans,Oromo,Shona,Kinyarwanda,Sesotho,Setswana,Malagasy,Wolof,Akan,Twi,Lingala,Luxembourgish,Basque,Catalan,Galician,Corsican,Sardinian,Belarusian,Faroese,Haitian Creole,Maori,Samoan,Tongan,Fijian,Tibetan,Uyghur,Javanese,Sundanese,Balinese,Hmong,Quechua,Guarani,Hawaiian,Chichewa,Bambara,Ewe,Aymara,Breton,Occitan,Romansh,Luganda,Kirundi,Tsonga,Venda`.split(",");
-const croatian=[
+const languages = [
+"Croatian","Romanian","English","German","Italian","French",
+"Spanish","Portuguese","Dutch","Polish","Czech","Slovak",
+"Slovenian","Hungarian","Greek","Swedish","Norwegian","Danish",
+"Finnish","Russian","Ukrainian","Albanian","Bosnian","Serbian",
+"Macedonian","Bulgarian","Estonian","Latvian","Lithuanian",
+"Icelandic","Irish","Welsh","Maltese","Turkish","Arabic","Hebrew",
+"Persian","Armenian","Georgian","Azerbaijani","Kazakh","Uzbek",
+"Kyrgyz","Tajik","Turkmen","Mongolian","Hindi","Nepali","Bengali",
+"Urdu","Punjabi","Gujarati","Marathi","Tamil","Telugu","Kannada",
+"Malayalam","Sinhala","Chinese","Japanese","Korean","Thai",
+"Vietnamese","Indonesian","Malay","Filipino","Burmese","Khmer",
+"Lao","Pashto","Dari","Kurdish","Swahili","Amharic","Somali",
+"Hausa","Yoruba","Igbo","Zulu","Xhosa","Afrikaans","Oromo",
+"Shona","Kinyarwanda","Sesotho","Setswana","Malagasy","Wolof",
+"Akan","Twi","Lingala","Luxembourgish","Basque","Catalan",
+"Galician","Corsican","Sardinian","Belarusian","Faroese",
+"Haitian Creole","Maori","Samoan","Tongan","Fijian","Tibetan",
+"Uyghur","Javanese","Sundanese","Balinese","Hmong","Quechua",
+"Guarani","Hawaiian","Chichewa","Bambara","Ewe","Aymara",
+"Breton","Occitan","Romansh","Luganda","Kirundi","Tsonga",
+"Venda","Yiddish","Latin","Esperanto","Māori","Aramaic",
+"Scottish Gaelic","Tigrinya","Zulu","Kashmiri","Sindhi"
+];
+
+const courses = {
+"Croatian":{
+flag:"🇭🇷",code:"hr-HR",
+lessons:[
 ["Bok!","नमस्कार / हेलो","बोक"],
 ["Dobar dan","शुभ दिन","दोबार दान"],
 ["Dobro jutro","शुभ प्रभात","दोब्रो युत्रो"],
@@ -85,37 +155,342 @@ const croatian=[
 ["Gdje je WC?","शौचालय कहाँ छ?","ग्द्ये ये वे-चे"],
 ["Trebam pomoć","मलाई सहयोग चाहिन्छ","त्रेबाम पोमोच"],
 ["Volim Hrvatsku","म क्रोएसिया मन पराउँछु","भोलिम ह्रभात्स्कु"]
-];
+]},
+"Romanian":{
+flag:"🇷🇴",code:"ro-RO",
+lessons:[
+["Bună!","नमस्कार","बुना"],
+["Bună dimineața","शुभ प्रभात","बुना दिमिन्यात्सा"],
+["Bună ziua","शुभ दिन","बुना जुवा"],
+["Bună seara","शुभ साँझ","बुना सेआरा"],
+["Mulțumesc","धन्यवाद","मुल्त्सुमेस्क"],
+["Te rog","कृपया","ते रोग"],
+["Da","हो","दा"],
+["Nu","होइन","नु"],
+["Ce faci?","तिमीलाई कस्तो छ?","चे फाच"],
+["Sunt bine","म ठीक छु","सुन्त बिने"],
+["Cum te cheamă?","तिम्रो नाम के हो?","कुम ते क्याम"],
+["Mă numesc...","मेरो नाम ... हो","म नुमेस्क"],
+["La revedere","फेरि भेटौँला","ला रेभेदेरे"],
+["Scuzați-mă","माफ गर्नुहोस्","स्कुजात्सि-म"],
+["Nu înțeleg","मैले बुझिनँ","नु इन्त्सेलेग"],
+["Vorbiți engleză?","के तपाईं अंग्रेजी बोल्नुहुन्छ?","भोर्बित्स एङ्गलेजा"],
+["Cât costă?","कति पैसा पर्छ?","कत कोस्ता"],
+["Unde este toaleta?","शौचालय कहाँ छ?","उन्दे एस्ते तोआलेता"],
+["Am nevoie de ajutor","मलाई सहयोग चाहिन्छ","अम नेभोये दे अयुतोर"],
+["Sunt din Nepal","म नेपालबाट हुँ","सुन्त दिन नेपाल"]
+]},
+"English":{
+flag:"🇬🇧",code:"en-GB",
+lessons:[
+["Hello","नमस्कार","हेलो"],
+["Good morning","शुभ प्रभात","गुड मोर्निङ"],
+["Good afternoon","शुभ दिउँसो","गुड आफ्टरनुन"],
+["Good evening","शुभ साँझ","गुड इभनिङ"],
+["Thank you","धन्यवाद","थ्याङ्क यू"],
+["Please","कृपया","प्लिज"],
+["Yes","हो","येस"],
+["No","होइन","नो"],
+["How are you?","तपाईंलाई कस्तो छ?","हाउ आर यू"],
+["I am fine","म ठीक छु","आइ एम फाइन"],
+["What is your name?","तपाईंको नाम के हो?","व्हाट इज योर नेम"],
+["My name is...","मेरो नाम ... हो","माइ नेम इज"],
+["Goodbye","बिदाइ / फेरि भेटौँला","गुडबाइ"],
+["Excuse me","माफ गर्नुहोस्","एक्सक्युज मी"],
+["I don't understand","मैले बुझिनँ","आइ डोन्ट अन्डरस्ट्यान्ड"],
+["Do you speak English?","के तपाईं अंग्रेजी बोल्नुहुन्छ?","डु यू स्पिक इङ्लिस"],
+["How much is it?","यसको मूल्य कति हो?","हाउ मच इज इट"],
+["Where is the toilet?","शौचालय कहाँ छ?","वेयर इज द टोइलेट"],
+["I need help","मलाई सहयोग चाहिन्छ","आइ निड हेल्प"],
+["I am from Nepal","म नेपालबाट हुँ","आइ एम फ्रम नेपाल"]
+]},
+"German":{
+flag:"🇩🇪",code:"de-DE",
+lessons:[
+["Hallo","नमस्कार","हालो"],
+["Guten Morgen","शुभ प्रभात","गुटेन मोर्गेन"],
+["Guten Tag","शुभ दिन","गुटेन टाग"],
+["Guten Abend","शुभ साँझ","गुटेन आबेन्ट"],
+["Danke","धन्यवाद","डाङ्के"],
+["Bitte","कृपया","बिटे"],
+["Ja","हो","या"],
+["Nein","होइन","नाइन"],
+["Wie geht es Ihnen?","तपाईंलाई कस्तो छ?","वी गेट एस इनेन"],
+["Mir geht es gut","म ठीक छु","मिर गेट एस गुट"],
+["Wie heißen Sie?","तपाईंको नाम के हो?","वी हाइसेन जी"],
+["Ich heiße...","मेरो नाम ... हो","इख हाइसे"],
+["Auf Wiedersehen","फेरि भेटौँला","आउफ विडरजेएन"],
+["Entschuldigung","माफ गर्नुहोस्","एन्टशुल्डिगुङ"],
+["Ich verstehe nicht","मैले बुझिनँ","इख फेर्स्टेहे निख्ट"],
+["Sprechen Sie Englisch?","के तपाईं अंग्रेजी बोल्नुहुन्छ?","श्प्रेखेन जी एङ्लिश"],
+["Wie viel kostet das?","यसको मूल्य कति हो?","वी फिल कोस्टेट दास"],
+["Wo ist die Toilette?","शौचालय कहाँ छ?","भो इस्ट दी टोइलेटे"],
+["Ich brauche Hilfe","मलाई सहयोग चाहिन्छ","इख ब्राउखे हिल्फे"],
+["Ich komme aus Nepal","म नेपालबाट आएको हुँ","इख कोमे आउस नेपाल"]
+]},
+"Italian":{
+flag:"🇮🇹",code:"it-IT",
+lessons:[
+["Ciao","नमस्कार / बाइ","चाओ"],
+["Buongiorno","शुभ प्रभात","बुओनजोर्नो"],
+["Buonasera","शुभ साँझ","बुओनासेरा"],
+["Buonanotte","शुभ रात्री","बुओनानोट्टे"],
+["Grazie","धन्यवाद","ग्रात्सिए"],
+["Per favore","कृपया","पेर फाभोरे"],
+["Sì","हो","सी"],
+["No","होइन","नो"],
+["Come stai?","तिमीलाई कस्तो छ?","कोमे स्ताइ"],
+["Sto bene","म ठीक छु","स्तो बेने"],
+["Come ti chiami?","तिम्रो नाम के हो?","कोमे ती कियामी"],
+["Mi chiamo...","मेरो नाम ... हो","मी कियामो"],
+["Arrivederci","फेरि भेटौँला","आरिभेदेर्ची"],
+["Mi scusi","माफ गर्नुहोस्","मी स्कुजी"],
+["Non capisco","मैले बुझिनँ","नोन कापिस्को"],
+["Parla inglese?","के तपाईं अंग्रेजी बोल्नुहुन्छ?","पार्ला इङ्लेसे"],
+["Quanto costa?","कति पैसा पर्छ?","क्वान्तो कोस्ता"],
+["Dov'è il bagno?","शौचालय कहाँ छ?","दोभे इल बान्यो"],
+["Ho bisogno di aiuto","मलाई सहयोग चाहिन्छ","ओ बिजोन्यो दी आयुतो"],
+["Vengo dal Nepal","म नेपालबाट आएको हुँ","भेङ्गो दल नेपाल"]
+]},
+"French":{
+flag:"🇫🇷",code:"fr-FR",
+lessons:[
+["Bonjour","नमस्कार / शुभ दिन","बोन्जुर"],
+["Bonsoir","शुभ साँझ","बोन्स्वार"],
+["Bonne nuit","शुभ रात्री","बोन नुई"],
+["Merci","धन्यवाद","मेर्सी"],
+["S'il vous plaît","कृपया","सिल भु प्ले"],
+["Oui","हो","वी"],
+["Non","होइन","नोन"],
+["Comment allez-vous?","तपाईंलाई कस्तो छ?","कोमान ताले भु"],
+["Je vais bien","म ठीक छु","झे भे बियाँ"],
+["Comment vous appelez-vous?","तपाईंको नाम के हो?","कोमान भु जाप्ले भु"],
+["Je m'appelle...","मेरो नाम ... हो","झे मापेल"],
+["Au revoir","फेरि भेटौँला","ओ रभ्वार"],
+["Excusez-moi","माफ गर्नुहोस्","एक्सक्युजे म्वा"],
+["Je ne comprends pas","मैले बुझिनँ","झे न कम्प्राँ पा"],
+["Parlez-vous anglais?","के तपाईं अंग्रेजी बोल्नुहुन्छ?","पार्ले भु आङ्ले"],
+["Combien ça coûte?","कति पैसा पर्छ?","कोम्बियाँ सा कुत"],
+["Où sont les toilettes?","शौचालय कहाँ छ?","उ सोन ले त्वालेट"],
+["J'ai besoin d'aide","मलाई सहयोग चाहिन्छ","झे बेज्वाँ देद"],
+["Je viens du Népal","म नेपालबाट आएको हुँ","झे भियाँ दु नेपाल"]
+]},
+"Spanish":{
+flag:"🇪🇸",code:"es-ES",
+lessons:[
+["Hola","नमस्कार","ओला"],
+["Buenos días","शुभ प्रभात","ब्वेनोस दियास"],
+["Buenas tardes","शुभ दिउँसो","ब्वेनास तार्देस"],
+["Buenas noches","शुभ साँझ / रात्री","ब्वेनास नोचेस"],
+["Gracias","धन्यवाद","ग्रासियास"],
+["Por favor","कृपया","पोर फाभोर"],
+["Sí","हो","सी"],
+["No","होइन","नो"],
+["¿Cómo estás?","तिमीलाई कस्तो छ?","कोमो एस्तास"],
+["Estoy bien","म ठीक छु","एस्तोय बिएन"],
+["¿Cómo te llamas?","तिम्रो नाम के हो?","कोमो ते यामास"],
+["Me llamo...","मेरो नाम ... हो","मे यामो"],
+["Adiós","बिदाइ","आदियोस"],
+["Perdón","माफ गर्नुहोस्","पेर्दोन"],
+["No entiendo","मैले बुझिनँ","नो एनतिएन्दो"],
+["¿Hablas inglés?","के तिमी अंग्रेजी बोल्छौ?","आब्लास इङ्ग्लेस"],
+["¿Cuánto cuesta?","कति पैसा पर्छ?","क्वान्तो क्वेस्ता"],
+["¿Dónde está el baño?","शौचालय कहाँ छ?","दोन्दे एस्ता एल बान्यो"],
+["Necesito ayuda","मलाई सहयोग चाहिन्छ","नेसिसितो आयुदा"],
+["Soy de Nepal","म नेपालबाट हुँ","सोय दे नेपाल"]
+]},
+"Hindi":{
+flag:"🇮🇳",code:"hi-IN",
+lessons:[
+["नमस्ते","नमस्कार","नमस्ते"],
+["सुप्रभात","शुभ प्रभात","सुप्रभात"],
+["शुभ संध्या","शुभ साँझ","शुभ सन्ध्या"],
+["धन्यवाद","धन्यवाद","धन्यवाद"],
+["कृपया","कृपया","कृपया"],
+["हाँ","हो","हाँ"],
+["नहीं","होइन","नहीं"],
+["आप कैसे हैं?","तपाईंलाई कस्तो छ?","आप कैसे हैं"],
+["मैं ठीक हूँ","म ठीक छु","मैं ठीक हूँ"],
+["आपका नाम क्या है?","तपाईंको नाम के हो?","आपका नाम क्या है"],
+["मेरा नाम ... है","मेरो नाम ... हो","मेरा नाम"],
+["अलविदा","बिदाइ","अलविदा"],
+["माफ कीजिए","माफ गर्नुहोस्","माफ कीजिए"],
+["मैं नहीं समझता","मैले बुझिनँ","मैं नहीं समझता"],
+["क्या आप अंग्रेज़ी बोलते हैं?","के तपाईं अंग्रेजी बोल्नुहुन्छ?","क्या आप अंग्रेज़ी बोलते हैं"],
+["यह कितने का है?","यसको मूल्य कति हो?","यह कितने का है"],
+["शौचालय कहाँ है?","शौचालय कहाँ छ?","शौचालय कहाँ है"],
+["मुझे मदद चाहिए","मलाई सहयोग चाहिन्छ","मुझे मदद चाहिए"],
+["मैं नेपाल से हूँ","म नेपालबाट हुँ","मैं नेपाल से हूँ"]
+]},
+"Nepali":{
+flag:"🇳🇵",code:"ne-NP",
+lessons:[
+["नमस्कार","नमस्कार","नमस्कार"],
+["शुभ प्रभात","शुभ प्रभात","शुभ प्रभात"],
+["शुभ साँझ","शुभ साँझ","शुभ साँझ"],
+["धन्यवाद","धन्यवाद","धन्यवाद"],
+["कृपया","कृपया","कृपया"],
+["हो","हो","हो"],
+["होइन","होइन","होइन"],
+["तपाईंलाई कस्तो छ?","तपाईंलाई कस्तो छ?","तपाईंलाई कस्तो छ"],
+["म ठीक छु","म ठीक छु","म ठीक छु"],
+["तपाईंको नाम के हो?","तपाईंको नाम के हो?","तपाईंको नाम के हो"],
+["मेरो नाम ... हो","मेरो नाम ... हो","मेरो नाम"],
+["फेरि भेटौँला","फेरि भेटौँला","फेरि भेटौँला"],
+["माफ गर्नुहोस्","माफ गर्नुहोस्","माफ गर्नुहोस्"],
+["मैले बुझिनँ","मैले बुझिनँ","मैले बुझिनँ"],
+["मलाई सहयोग चाहिन्छ","मलाई सहयोग चाहिन्छ","मलाई सहयोग चाहिन्छ"]
+]},
+"Japanese":{
+flag:"🇯🇵",code:"ja-JP",
+lessons:[
+["こんにちは","नमस्कार","कोन्निचिवा"],
+["おはようございます","शुभ प्रभात","ओहायो गोजाइमास"],
+["こんばんは","शुभ साँझ","कोन्बान्वा"],
+["ありがとうございます","धेरै धन्यवाद","अरिगातो गोजाइमास"],
+["お願いします","कृपया","ओनेगाइशिमास"],
+["はい","हो","हाइ"],
+["いいえ","होइन","इइए"],
+["お元気ですか","तपाईंलाई कस्तो छ?","ओगेन्की देसु का"],
+["元気です","म ठीक छु","गेन्की देसु"],
+["お名前は何ですか","तपाईंको नाम के हो?","ओनामाए वा नान देसु का"],
+["私の名前は...です","मेरो नाम ... हो","वाताशी नो नामाए वा"],
+["さようなら","बिदाइ","सायोनारा"],
+["すみません","माफ गर्नुहोस्","सुमिमासेन"],
+["分かりません","मैले बुझिनँ","वाकारिमासेन"],
+["英語を話せますか","के तपाईं अंग्रेजी बोल्नुहुन्छ?","एइगो ओ हानासेमासु का"],
+["いくらですか","कति पैसा पर्छ?","इकुरा देसु का"],
+["トイレはどこですか","शौचालय कहाँ छ?","तोइरे वा दोको देसु का"],
+["助けてください","कृपया सहयोग गर्नुहोस्","तासुकेते कुदासाइ"],
+["ネパールから来ました","म नेपालबाट आएको हुँ","नेपारु कारा किमाशिता"]
+]}
+};
+
+let selected="Croatian";
+let completed=JSON.parse(localStorage.getItem("gyanLanguageProgress")||"{}");
+
 function showLanguages(){
-let q=document.getElementById("search").value.toLowerCase();
-let found=list.filter(x=>x.toLowerCase().includes(q));
-document.getElementById("languages").innerHTML=found.map(x=>
-`<button class="${x===selected?'active':''}" onclick="choose('${x}')">${x}</button>`).join("");
-document.getElementById("total").textContent=found.length+" भाषा भेटिए";
+ const q=document.getElementById("search").value.toLowerCase();
+ const found=languages.filter(x=>x.toLowerCase().includes(q));
+ document.getElementById("total").textContent=found.length+" भाषा भेटिए";
+ document.getElementById("languages").innerHTML="";
+ found.forEach(x=>{
+  const b=document.createElement("button");
+  b.textContent=(courses[x]?.flag||"🌐")+" "+x;
+  if(x===selected)b.classList.add("active");
+  b.onclick=()=>choose(x);
+  document.getElementById("languages").appendChild(b);
+ });
 }
+
 function choose(x){
-selected=x;
-document.getElementById("title").textContent="🌍 "+x+" भाषा";
-document.getElementById("info").textContent=x==="Croatian"?"नेपाली अर्थ र उच्चारणसहित क्रोएसियन A1 पाठ।":x+" भाषाको पाठ सामग्री क्रमशः थपिँदैछ।";
-showLanguages();showCourse();
+ selected=x;
+ showLanguages();
+ showCourse();
 }
+
 function showCourse(){
-let box=document.getElementById("course");
-if(selected!=="Croatian"){
-box.innerHTML="<p>यस भाषाको पाठ निर्माण हुँदैछ। अहिले Croatian A1 पाठ उपलब्ध छ। अर्को पाठ्यक्रम क्रमशः थपिनेछ।</p>";
-return;
+ const c=courses[selected];
+ const level=document.getElementById("level").value;
+ document.getElementById("levelTag").textContent=level+" पाठ्यक्रम";
+ document.getElementById("courseTitle").textContent=(c?.flag||"🌐")+" "+selected+" भाषा";
+ const box=document.getElementById("course");
+
+ if(!c){
+  document.getElementById("courseInfo").textContent=selected+" भाषाको पाठ्यक्रम केन्द्रमा थपिने क्रममा छ।";
+  box.innerHTML="<h3>📚 "+selected+" भाषा</h3><p>यो भाषा हाम्रो १३०+ भाषा सूचीमा समावेश छ। यसको नेपाली अर्थ, उच्चारण, व्याकरण, संवाद र अभ्यास सामग्री तयार गरी क्रमशः प्रकाशित गरिनेछ।</p><p class='small'>अहिले १० भाषाका प्रारम्भिक पाठ उपलब्ध छन्।</p>";
+  document.getElementById("quizQuestion").textContent="यो भाषाको क्विज पाठ्यक्रम प्रकाशित भएपछि उपलब्ध हुनेछ।";
+  document.getElementById("quizOptions").innerHTML="";
+  document.getElementById("quizResult").textContent="";
+  updateProgress();
+  return;
+ }
+
+ document.getElementById("courseInfo").textContent="नेपाली अर्थ, उच्चारण र आवाजसहित "+selected+" भाषा सिक्नुहोस्।";
+ box.innerHTML="<h3>📖 "+level+" - पाठ १: दैनिक बोलचाल</h3>";
+ c.lessons.forEach((a,i)=>{
+  const div=document.createElement("div");
+  div.className="lesson";
+  const done=completed[selected+"-"+level+"-"+i];
+  const title=document.createElement("strong");
+  title.textContent=(i+1)+". "+a[0];
+  const meaning=document.createElement("p");
+  meaning.textContent="नेपाली अर्थ: "+a[1];
+  const pron=document.createElement("p");
+  pron.className="small";
+  pron.textContent="उच्चारण: "+a[2];
+  const speak=document.createElement("button");
+  speak.textContent="🔊 सुन्नुहोस्";
+  speak.onclick=()=>speakWord(a[0],c.code);
+  const mark=document.createElement("button");
+  mark.textContent=done?"✅ पूरा भयो":"पाठ पूरा गर्नुहोस्";
+  if(done)mark.classList.add("active");
+  mark.onclick=()=>{
+   completed[selected+"-"+level+"-"+i]=true;
+   localStorage.setItem("gyanLanguageProgress",JSON.stringify(completed));
+   showCourse();
+  };
+  div.append(title,meaning,pron,speak,mark);
+  box.appendChild(div);
+ });
+ makeQuiz(c);
+ updateProgress();
 }
-box.innerHTML=croatian.map((a,i)=>`<div class="lesson"><strong>${i+1}. ${a[0]}</strong><p>नेपाली अर्थ: ${a[1]}</p><p class="small">उच्चारण: ${a[2]}</p><button onclick="speak('${a[0]}')">🔊 उच्चारण सुन्नुहोस्</button></div>`).join("");
+
+function speakWord(word,code){
+ if(!("speechSynthesis" in window)){
+  alert("तपाईंको ब्राउजरमा आवाज सुविधा उपलब्ध छैन।");
+  return;
+ }
+ speechSynthesis.cancel();
+ const u=new SpeechSynthesisUtterance(word);
+ u.lang=code;
+ speechSynthesis.speak(u);
 }
-function speak(word){
-if("speechSynthesis" in window){
-let u=new SpeechSynthesisUtterance(word);u.lang="hr-HR";speechSynthesis.speak(u);
-}else{alert("यो फोनको ब्राउजरमा आवाज सुविधा उपलब्ध छैन।")}
+
+function makeQuiz(c){
+ const first=c.lessons[4]||c.lessons[0];
+ document.getElementById("quizQuestion").textContent=
+  first[0]+" को नेपाली अर्थ के हो?";
+ const options=[
+  {text:first[1],correct:true},
+  {text:"शुभ प्रभात",correct:false},
+  {text:"माफ गर्नुहोस्",correct:false}
+ ];
+ options.sort(()=>Math.random()-.5);
+ const box=document.getElementById("quizOptions");
+ box.innerHTML="";
+ options.forEach(o=>{
+  const b=document.createElement("button");
+  b.textContent=o.text;
+  b.onclick=()=>{
+   document.getElementById("quizResult").textContent=
+    o.correct?"✅ सही उत्तर! धेरै राम्रो।":"❌ गलत उत्तर। फेरि प्रयास गर्नुहोस्।";
+  };
+  box.appendChild(b);
+ });
 }
-function check(ok){
-document.getElementById("result").textContent=ok?"✅ सही उत्तर!":"❌ फेरि प्रयास गर्नुहोस्।";
+
+function updateProgress(){
+ const keys=Object.keys(completed).filter(k=>k.startsWith(selected+"-"));
+ const total=courses[selected]?.lessons.length||0;
+ const done=keys.length;
+ document.getElementById("progressText").textContent="पूरा भएका पाठ: "+done+" / "+total;
+ document.getElementById("progressBar").style.width=
+  (total?done/total*100:0)+"%";
 }
-showLanguages();showCourse();
+
+function resetProgress(){
+ if(!confirm("यस भाषाको सुरक्षित प्रगति मेटाउने?"))return;
+ Object.keys(completed).forEach(k=>{
+  if(k.startsWith(selected+"-"))delete completed[k];
+ });
+ localStorage.setItem("gyanLanguageProgress",JSON.stringify(completed));
+ showCourse();
+}
+
+showLanguages();
+showCourse();
 </script>
 </body>
 </html>
