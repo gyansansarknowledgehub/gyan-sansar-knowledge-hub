@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>World Languages | GYAN SANSAR</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f1f5fb;color:#17243a}
+header{background:#123b75;color:white;text-align:center;padding:24px 12px}
+header h1{font-size:23px}
+main{max-width:850px;margin:auto;padding:14px}
+.card{background:white;padding:17px;border-radius:13px;margin:13px 0;box-shadow:0 2px 10px #0001}
+h2{color:#123b75}
+input,select{width:100%;padding:13px;border:1px solid #ccd5e2;border-radius:8px;margin:8px 0;font-size:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+button{padding:12px;border:0;border-radius:8px;background:#e8effb;color:#123b75;font-size:15px}
+button.active{background:#123b75;color:white}
+.lesson{padding:12px 0;border-bottom:1px solid #eee}
+.small{color:#68758a;font-size:13px}
+footer{text-align:center;padding:20px;color:#68758a}
+</style>
+</head>
+<body>
+<header>
+<div style="font-size:38px">🌍📚</div>
+<h1>GYAN SANSAR KNOWLEDGE HUB</h1>
+<p>WORLD LANGUAGES LEARNING CENTER</p>
+<p>ज्ञान सबैका लागि, शिक्षा जीवनका लागि।</p>
+</header>
+<main>
+<section class="card">
+<h2>🌐 भाषा छान्नुहोस्</h2>
+<p>नेपाली माध्यमबाट संसारका भाषा सिक्नुहोस्।</p>
+<input id="search" placeholder="भाषा खोज्नुहोस्..." oninput="showLanguages()">
+<div class="grid" id="languages"></div>
+<p class="small" id="total"></p>
+</section>
+<section class="card">
+<h2 id="title">🇭🇷 Croatian भाषा</h2>
+<p id="info">नेपाली अर्थ र उच्चारणसहित सिक्नुहोस्।</p>
+<select id="level" onchange="showCourse()">
+<option>A1 - Beginner</option><option>A2 - Elementary</option>
+<option>B1 - Intermediate</option><option>B2 - Upper Intermediate</option>
+<option>C1 - Advanced</option><option>C2 - Proficient</option>
+</select>
+<div id="course"></div>
+</section>
+<section class="card">
+<h2>📝 अभ्यास प्रश्न</h2>
+<p>क्रोएसियन भाषामा Hvala को अर्थ के हो?</p>
+<div id="quiz">
+<button onclick="check(false)">नमस्कार</button>
+<button onclick="check(true)">धन्यवाद</button>
+<button onclick="check(false)">शुभ प्रभात</button>
+</div>
+<p id="result"></p>
+</section>
+</main>
+<footer>
+<strong>GYAN SANSAR KNOWLEDGE HUB</strong>
+<p>LEARN • GROW • SUCCEED</p>
+</footer>
+<script>
+const list=`Croatian,Romanian,English,German,Italian,French,Spanish,Portuguese,Dutch,Polish,Czech,Slovak,Slovenian,Hungarian,Greek,Swedish,Norwegian,Danish,Finnish,Russian,Ukrainian,Albanian,Bosnian,Serbian,Macedonian,Bulgarian,Estonian,Latvian,Lithuanian,Icelandic,Irish,Welsh,Maltese,Turkish,Arabic,Hebrew,Persian,Armenian,Georgian,Azerbaijani,Kazakh,Uzbek,Kyrgyz,Tajik,Turkmen,Mongolian,Hindi,Nepali,Bengali,Urdu,Punjabi,Gujarati,Marathi,Tamil,Telugu,Kannada,Malayalam,Sinhala,Chinese,Japanese,Korean,Thai,Vietnamese,Indonesian,Malay,Filipino,Burmese,Khmer,Lao,Pashto,Dari,Kurdish,Swahili,Amharic,Somali,Hausa,Yoruba,Igbo,Zulu,Xhosa,Afrikaans,Oromo,Shona,Kinyarwanda,Sesotho,Setswana,Malagasy,Wolof,Akan,Twi,Lingala,Luxembourgish,Basque,Catalan,Galician,Corsican,Sardinian,Belarusian,Faroese,Haitian Creole,Maori,Samoan,Tongan,Fijian,Tibetan,Uyghur,Javanese,Sundanese,Balinese,Hmong,Quechua,Guarani,Hawaiian,Chichewa,Bambara,Ewe,Aymara,Breton,Occitan,Romansh,Luganda,Kirundi,Tsonga,Venda`.split(",");
+const croatian=[
+["Bok!","नमस्कार / हेलो","बोक"],
+["Dobar dan","शुभ दिन","दोबार दान"],
+["Dobro jutro","शुभ प्रभात","दोब्रो युत्रो"],
+["Dobra večer","शुभ साँझ","दोब्रा वेचेर"],
+["Hvala","धन्यवाद","ह्वाला"],
+["Molim","कृपया / स्वागत छ","मोलिम"],
+["Da","हो","दा"],
+["Ne","होइन","ने"],
+["Kako ste?","तपाईंलाई कस्तो छ?","काको स्ते"],
+["Dobro sam","म ठीक छु","दोब्रो साम"],
+["Kako se zovete?","तपाईंको नाम के हो?","काको से जोभेते"],
+["Zovem se...","मेरो नाम ... हो","जोभेम से"],
+["Doviđenja","फेरि भेटौँला","दोभिजेन्या"],
+["Oprostite","माफ गर्नुहोस्","ओप्रोस्तिते"],
+["Ne razumijem","मैले बुझिनँ","ने रजुमियेम"],
+["Govorite li engleski?","के तपाईं अंग्रेजी बोल्नुहुन्छ?","गोभोरिते ली एङ्गलेस्की"],
+["Koliko košta?","कति पैसा पर्छ?","कोलिको कोष्टा"],
+["Gdje je WC?","शौचालय कहाँ छ?","ग्द्ये ये वे-चे"],
+["Trebam pomoć","मलाई सहयोग चाहिन्छ","त्रेबाम पोमोच"],
+["Volim Hrvatsku","म क्रोएसिया मन पराउँछु","भोलिम ह्रभात्स्कु"]
+];
+function showLanguages(){
+let q=document.getElementById("search").value.toLowerCase();
+let found=list.filter(x=>x.toLowerCase().includes(q));
+document.getElementById("languages").innerHTML=found.map(x=>
+`<button class="${x===selected?'active':''}" onclick="choose('${x}')">${x}</button>`).join("");
+document.getElementById("total").textContent=found.length+" भाषा भेटिए";
+}
+function choose(x){
+selected=x;
+document.getElementById("title").textContent="🌍 "+x+" भाषा";
+document.getElementById("info").textContent=x==="Croatian"?"नेपाली अर्थ र उच्चारणसहित क्रोएसियन A1 पाठ।":x+" भाषाको पाठ सामग्री क्रमशः थपिँदैछ।";
+showLanguages();showCourse();
+}
+function showCourse(){
+let box=document.getElementById("course");
+if(selected!=="Croatian"){
+box.innerHTML="<p>यस भाषाको पाठ निर्माण हुँदैछ। अहिले Croatian A1 पाठ उपलब्ध छ। अर्को पाठ्यक्रम क्रमशः थपिनेछ।</p>";
+return;
+}
+box.innerHTML=croatian.map((a,i)=>`<div class="lesson"><strong>${i+1}. ${a[0]}</strong><p>नेपाली अर्थ: ${a[1]}</p><p class="small">उच्चारण: ${a[2]}</p><button onclick="speak('${a[0]}')">🔊 उच्चारण सुन्नुहोस्</button></div>`).join("");
+}
+function speak(word){
+if("speechSynthesis" in window){
+let u=new SpeechSynthesisUtterance(word);u.lang="hr-HR";speechSynthesis.speak(u);
+}else{alert("यो फोनको ब्राउजरमा आवाज सुविधा उपलब्ध छैन।")}
+}
+function check(ok){
+document.getElementById("result").textContent=ok?"✅ सही उत्तर!":"❌ फेरि प्रयास गर्नुहोस्।";
+}
+showLanguages();showCourse();
+</script>
+</body>
+</html>
