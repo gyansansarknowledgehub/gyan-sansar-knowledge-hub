@@ -3,22 +3,21 @@
 <html lang="ne">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#102b55">
-<title>World Languages | GYAN SANSAR KNOWLEDGE HUB</title>
+<title>GYAN SANSAR KNOWLEDGE HUB</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,"Noto Sans Devanagari",sans-serif;background:#f1f5fb;color:#17243a}
-header{background:linear-gradient(120deg,#102b55,#2362a5);color:white;text-align:center;padding:28px 12px}
-header h1{margin:8px 0}
-main{max-width:1000px;margin:auto;padding:15px}
-.card{background:white;padding:18px;border-radius:14px;margin:14px 0;box-shadow:0 3px 14px #17243a12}
+header{background:linear-gradient(120deg,#102b55,#2876bd);color:white;text-align:center;padding:28px 12px}
+header h1{font-size:25px}
+main{max-width:1100px;margin:auto;padding:14px}
+.card{background:white;padding:17px;border-radius:14px;margin:14px 0;box-shadow:0 3px 14px #17243a12}
 h2{color:#123b75}
-input,select{width:100%;padding:13px;border:1px solid #ccd5e2;border-radius:9px;margin:8px 0;font-size:16px}
-button{padding:11px 14px;border:0;border-radius:9px;background:#e8effb;color:#123b75;font-size:15px;cursor:pointer;margin:4px}
-button:hover{background:#d3e2fa}
+input,select{width:100%;padding:13px;border:1px solid #ccd5e2;border-radius:9px;margin:7px 0;font-size:16px}
+button{padding:11px 14px;border:0;border-radius:9px;background:#e8effb;color:#123b75;font-size:14px;margin:4px;cursor:pointer}
 button.active,.primary{background:#123b75;color:white}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:7px}
 .lesson{padding:13px 0;border-bottom:1px solid #e5eaf1}
 .lesson strong{font-size:17px;color:#123b75}
 .small{color:#64748b;font-size:13px}
@@ -26,11 +25,9 @@ button.active,.primary{background:#123b75;color:white}
 .progress{height:10px;background:#e5eaf1;border-radius:20px;overflow:hidden}
 #progressBar{height:100%;width:0;background:#1c9b69}
 footer{text-align:center;padding:25px;color:#64748b}
-a{color:#123b75}
 </style>
 </head>
 <body>
-
 <header>
 <div style="font-size:42px">🌍📚</div>
 <h1>GYAN SANSAR KNOWLEDGE HUB</h1>
@@ -42,191 +39,90 @@ a{color:#123b75}
 <main>
 <section class="card">
 <h2>🌐 संसारका भाषा छान्नुहोस्</h2>
-<p>नेपाली माध्यमबाट विभिन्न देशका भाषा सिक्नुहोस्।</p>
-<input id="search" placeholder="🔍 भाषा खोज्नुहोस्..." oninput="showLanguages()">
-<p id="total" class="small"></p>
+<p>नेपाली माध्यमबाट संसारका भाषा सिक्नुहोस्।</p>
+<input id="languageSearch" placeholder="🔍 भाषा खोज्नुहोस्..." oninput="showLanguages()">
+<p id="languageTotal" class="small"></p>
 <div class="grid" id="languages"></div>
 </section>
 
 <section class="card">
 <h2 id="courseTitle">🇭🇷 Croatian भाषा</h2>
- 
-const SUPABASE_URL = "https://dlqvkyhpynunpptaywal.supabase.co";
-const SUPABASE_KEY = "sb_publishable_DY4fyCutBkuejKbPpqePXw_l-G_Okzv";
+<p id="courseInfo">आफ्नो भाषा र पाठ्यक्रमको तह छान्नुहोस्।</p>
 
-const languageCodes = {
-  Croatian: "hr",
-  Romanian: "ro",
-  English: "en",
-  German: "de",
-  Italian: "it",
-  French: "fr",
-  Spanish: "es",
-  Hindi: "hi",
-  Nepali: "ne",
-  Japanese: "ja"
-};
-
-let dbOffset = 0;
-const dbLimit = 100;
-
-async function loadDatabase(reset = true) {
-  const status = document.getElementById("dbStatus");
-  const results = document.getElementById("dbResults");
-
-  if (reset) {
-    dbOffset = 0;
-    results.innerHTML = "";
-  }
-
-  const table = document.getElementById("dbType").value;
-  const level = document.getElementById("dbLevel").value;
-  const search = document.getElementById("dbSearch").value.trim();
-  const code = languageCodes[selected] || selected.toLowerCase();
-
-  status.textContent = "सामग्री खोजिँदै छ...";
-
-  const params = new URLSearchParams({
-    select: "*",
-    language_code: "eq." + code,
-    level: "eq." + level,
-    order: "id.asc",
-    limit: String(dbLimit),
-    offset: String(dbOffset)
-  });
-
-  if (search) {
-    const safe = search.replace(/[,*()]/g, " ");
-    const field = table === "language_words" ? "word" : "sentence";
-    params.set("or",
-      "(" + field + ".ilike.*" + safe +
-      "*,nepali_meaning.ilike.*" + safe + "*)"
-    );
-  }
-
-  try {
-    const response = await fetch(
-      SUPABASE_URL + "/rest/v1/" + table + "?" + params,
-      {
-        headers: {
-          apikey: SUPABASE_KEY,
-          Authorization: "Bearer " + SUPABASE_KEY
-        }
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error("Database error: " + response.status);
-    }
-
-    const data = await response.json();
-
-    if (!data.length && dbOffset === 0) {
-      status.textContent = "यस तहमा सामग्री अझै थपिएको छैन।";
-      return;
-    }
-
-    data.forEach((item, index) => {
-      const div = document.createElement("div");
-      div.className = "lesson";
-
-      const title = document.createElement("strong");
-      title.textContent = (dbOffset + index + 1) + ". " +
-        (item.word || item.sentence || "");
-
-      const meaning = document.createElement("p");
-      meaning.textContent = "नेपाली अर्थ: " + item.nepali_meaning;
-
-      div.append(title, meaning);
-
-      if (item.pronunciation) {
-        const pron = document.createElement("p");
-        pron.className = "small";
-        pron.textContent = "उच्चारण: " + item.pronunciation;
-        div.appendChild(pron);
-      }
-
-      results.appendChild(div);
-    });
-
-    dbOffset += data.length;
-    status.textContent = "जम्मा देखाइएको सामग्री: " + dbOffset;
-
-  } catch (error) {
-    status.textContent = "समस्या: " + error.message;
-  }
-}
-
-<p id="courseInfo">नेपाली अर्थ, उच्चारण र अभ्याससहित भाषा सिक्नुहोस्।</p>
-
-<label for="level"><b>📘 आफ्नो तह छान्नुहोस्</b></label>
-<select id="level" onchange="showCourse()">
-<option value="A1">A1 - Beginner (सुरुवाती)</option>
-<option value="A2">A2 - Elementary (आधारभूत)</option>
-<option value="B1">B1 - Intermediate (मध्यम)</option>
-<option value="B2">B2 - Upper Intermediate</option>
-<option value="C1">C1 - Advanced (उन्नत)</option>
-<option value="C2">C2 - Proficient (विशेषज्ञ)</option>
+<label>📘 पाठ्यक्रम तह</label>
+<select id="level" onchange="changeCourse()">
+<option>A1</option><option>A2</option>
+<option>B1</option><option>B2</option>
+<option>C1</option><option>C2</option>
 </select>
 
-<div class="tag" id="levelTag">A1 Beginner</div>
+<label>📚 विषय छान्नुहोस्</label>
+<select id="topic" onchange="loadDatabase(true)">
+<option value="all">सबै विषय</option>
+<option value="daily">दैनिक बोलचाल</option>
+<option value="greetings">अभिवादन र परिचय</option>
+<option value="family">परिवार र सम्बन्ध</option>
+<option value="food">खाना र भान्सा</option>
+<option value="work">काम र रोजगार</option>
+<option value="shopping">बजार र किनमेल</option>
+<option value="travel">यात्रा र यातायात</option>
+<option value="health">स्वास्थ्य</option>
+<option value="education">शिक्षा</option>
+<option value="grammar">व्याकरण</option>
+<option value="dialogue">संवाद र अभ्यास</option>
+<option value="exam">परीक्षा र Quiz</option>
+</select>
+
+<div class="tag" id="courseTag">A1 Beginner</div>
 <div id="course"></div>
- 
-<section class="card">
-  <h2>📚 विशाल भाषा शब्द तथा वाक्य भण्डार</h2>
-  <p>Database बाट भाषा, तह र विषयअनुसार सामग्री खोज्नुहोस्।</p>
-
-  <select id="dbType">
-    <option value="language_words">शब्द भण्डार</option>
-    <option value="language_sentences">वाक्य भण्डार</option>
-  </select>
-
-  <select id="dbLevel">
-    <option value="A1">A1 - Beginner</option>
-    <option value="A2">A2 - Elementary</option>
-    <option value="B1">B1 - Intermediate</option>
-    <option value="B2">B2 - Upper Intermediate</option>
-    <option value="C1">C1 - Advanced</option>
-    <option value="C2">C2 - Proficient</option>
-  </select>
-
-  <input id="dbSearch" placeholder="शब्द वा नेपाली अर्थ खोज्नुहोस्">
-  <button class="primary" onclick="loadDatabase(true)">🔍 खोज्नुहोस्</button>
-  <p id="dbStatus">Database सामग्री लोड गर्न तयार छ।</p>
-  <div id="dbResults"></div>
-  <button onclick="loadDatabase(false)">थप सामग्री देखाउनुहोस्</button>
 </section>
 
+<section class="card">
+<h2>📖 विशाल शब्द तथा वाक्य भण्डार</h2>
+<p>भाषा, तह र विषयअनुसार Database मा रहेका पाठ खोज्नुहोस्।</p>
+
+<label>सामग्रीको प्रकार</label>
+<select id="dbType">
+<option value="language_words">शब्द भण्डार</option>
+<option value="language_sentences">वाक्य भण्डार</option>
+</select>
+
+<label>खोज्ने शब्द वा नेपाली अर्थ</label>
+<input id="dbSearch" placeholder="शब्द वा नेपाली अर्थ खोज्नुहोस्..." onkeydown="if(event.key==='Enter')loadDatabase(true)">
+
+<button class="primary" onclick="loadDatabase(true)">🔍 खोज्नुहोस्</button>
+<button onclick="loadDatabase(false)">थप सामग्री देखाउनुहोस्</button>
+<p id="dbStatus" class="small">Database तयार छ।</p>
+<div id="dbResults"></div>
 </section>
 
 <section class="card">
 <h2>📈 मेरो सिकाइ प्रगति</h2>
 <p id="progressText">पूरा भएका पाठ: 0</p>
 <div class="progress"><div id="progressBar"></div></div>
-<p class="small">तपाईंले पूरा गरेका पाठ यस फोनको ब्राउजरमा सुरक्षित हुन्छन्।</p>
+<p class="small">प्रगति यो फोनको ब्राउजरमा सुरक्षित हुन्छ।</p>
 <button onclick="resetProgress()">प्रगति रिसेट गर्नुहोस्</button>
 </section>
 
 <section class="card">
 <h2>📝 ज्ञान परीक्षण (Quiz)</h2>
-<p id="quizQuestion"></p>
+<p id="quizQuestion">Database मा पाठ थपिएपछि अभ्यास गर्न सकिन्छ।</p>
 <div id="quizOptions"></div>
 <p id="quizResult"></p>
 </section>
 
 <section class="card">
 <h2>🎯 हाम्रो भाषा शिक्षा प्रणाली</h2>
-<p>हरेक भाषामा निम्न विषयहरू समावेश गर्ने गरी पाठ्यक्रम विस्तार गरिनेछ:</p>
+<p>१३४ भाषाका लागि ६ तह र १२ विषयको पाठ्यक्रम संरचना।</p>
 <ul>
-<li>शब्दभण्डार र नेपाली अर्थ</li>
-<li>नेपाली लिपिमा उच्चारण</li>
-<li>दैनिक बोलचाल र संवाद</li>
-<li>व्याकरण र वाक्य निर्माण</li>
-<li>सुन्ने र बोल्ने अभ्यास</li>
-<li>पढ्ने र लेख्ने अभ्यास</li>
-<li>अध्यायगत Quiz र परीक्षा</li>
-<li>A1 देखि C2 सम्मको पाठ्यक्रम</li>
+<li>A1 – Beginner</li>
+<li>A2 – Elementary</li>
+<li>B1 – Intermediate</li>
+<li>B2 – Upper Intermediate</li>
+<li>C1 – Advanced</li>
+<li>C2 – Proficient</li>
 </ul>
+<p>प्रत्येक तहमा दैनिक बोलचाल, अभिवादन, परिवार, खाना, रोजगार, बजार, यात्रा, स्वास्थ्य, शिक्षा, व्याकरण, संवाद र परीक्षा समावेश गर्ने संरचना।</p>
 </section>
 
 <p><a href="index.html">← मुख्य गृहपृष्ठमा फर्कनुहोस्</a></p>
@@ -239,7 +135,10 @@ async function loadDatabase(reset = true) {
 </footer>
 
 <script>
-const languages = [
+const SUPABASE_URL="https://dlqvkyhpynunpptaywal.supabase.co";
+const SUPABASE_KEY="sb_publishable_DY4fyCutBkuejKbPpqePXw_l-G_Okzv";
+
+const languages=[
 "Croatian","Romanian","English","German","Italian","French",
 "Spanish","Portuguese","Dutch","Polish","Czech","Slovak",
 "Slovenian","Hungarian","Greek","Swedish","Norwegian","Danish",
@@ -261,369 +160,247 @@ const languages = [
 "Guarani","Hawaiian","Chichewa","Bambara","Ewe","Aymara",
 "Breton","Occitan","Romansh","Luganda","Kirundi","Tsonga",
 "Venda","Yiddish","Latin","Esperanto","Māori","Aramaic",
-"Scottish Gaelic","Tigrinya","Zulu","Kashmiri","Sindhi"
+"Scottish Gaelic","Tigrinya","Kashmiri","Sindhi"
 ];
 
-const courses = {
-"Croatian":{
-flag:"🇭🇷",code:"hr-HR",
-lessons:[
-["Bok!","नमस्कार / हेलो","बोक"],
-["Dobar dan","शुभ दिन","दोबार दान"],
-["Dobro jutro","शुभ प्रभात","दोब्रो युत्रो"],
-["Dobra večer","शुभ साँझ","दोब्रा वेचेर"],
-["Hvala","धन्यवाद","ह्वाला"],
-["Molim","कृपया / स्वागत छ","मोलिम"],
-["Da","हो","दा"],
-["Ne","होइन","ने"],
-["Kako ste?","तपाईंलाई कस्तो छ?","काको स्ते"],
-["Dobro sam","म ठीक छु","दोब्रो साम"],
-["Kako se zovete?","तपाईंको नाम के हो?","काको से जोभेते"],
-["Zovem se...","मेरो नाम ... हो","जोभेम से"],
-["Doviđenja","फेरि भेटौँला","दोभिजेन्या"],
-["Oprostite","माफ गर्नुहोस्","ओप्रोस्तिते"],
-["Ne razumijem","मैले बुझिनँ","ने रजुमियेम"],
-["Govorite li engleski?","के तपाईं अंग्रेजी बोल्नुहुन्छ?","गोभोरिते ली एङ्गलेस्की"],
-["Koliko košta?","कति पैसा पर्छ?","कोलिको कोष्टा"],
-["Gdje je WC?","शौचालय कहाँ छ?","ग्द्ये ये वे-चे"],
-["Trebam pomoć","मलाई सहयोग चाहिन्छ","त्रेबाम पोमोच"],
-["Volim Hrvatsku","म क्रोएसिया मन पराउँछु","भोलिम ह्रभात्स्कु"]
-]},
-"Romanian":{
-flag:"🇷🇴",code:"ro-RO",
-lessons:[
-["Bună!","नमस्कार","बुना"],
-["Bună dimineața","शुभ प्रभात","बुना दिमिन्यात्सा"],
-["Bună ziua","शुभ दिन","बुना जुवा"],
-["Bună seara","शुभ साँझ","बुना सेआरा"],
-["Mulțumesc","धन्यवाद","मुल्त्सुमेस्क"],
-["Te rog","कृपया","ते रोग"],
-["Da","हो","दा"],
-["Nu","होइन","नु"],
-["Ce faci?","तिमीलाई कस्तो छ?","चे फाच"],
-["Sunt bine","म ठीक छु","सुन्त बिने"],
-["Cum te cheamă?","तिम्रो नाम के हो?","कुम ते क्याम"],
-["Mă numesc...","मेरो नाम ... हो","म नुमेस्क"],
-["La revedere","फेरि भेटौँला","ला रेभेदेरे"],
-["Scuzați-mă","माफ गर्नुहोस्","स्कुजात्सि-म"],
-["Nu înțeleg","मैले बुझिनँ","नु इन्त्सेलेग"],
-["Vorbiți engleză?","के तपाईं अंग्रेजी बोल्नुहुन्छ?","भोर्बित्स एङ्गलेजा"],
-["Cât costă?","कति पैसा पर्छ?","कत कोस्ता"],
-["Unde este toaleta?","शौचालय कहाँ छ?","उन्दे एस्ते तोआलेता"],
-["Am nevoie de ajutor","मलाई सहयोग चाहिन्छ","अम नेभोये दे अयुतोर"],
-["Sunt din Nepal","म नेपालबाट हुँ","सुन्त दिन नेपाल"]
-]},
-"English":{
-flag:"🇬🇧",code:"en-GB",
-lessons:[
-["Hello","नमस्कार","हेलो"],
-["Good morning","शुभ प्रभात","गुड मोर्निङ"],
-["Good afternoon","शुभ दिउँसो","गुड आफ्टरनुन"],
-["Good evening","शुभ साँझ","गुड इभनिङ"],
-["Thank you","धन्यवाद","थ्याङ्क यू"],
-["Please","कृपया","प्लिज"],
-["Yes","हो","येस"],
-["No","होइन","नो"],
-["How are you?","तपाईंलाई कस्तो छ?","हाउ आर यू"],
-["I am fine","म ठीक छु","आइ एम फाइन"],
-["What is your name?","तपाईंको नाम के हो?","व्हाट इज योर नेम"],
-["My name is...","मेरो नाम ... हो","माइ नेम इज"],
-["Goodbye","बिदाइ / फेरि भेटौँला","गुडबाइ"],
-["Excuse me","माफ गर्नुहोस्","एक्सक्युज मी"],
-["I don't understand","मैले बुझिनँ","आइ डोन्ट अन्डरस्ट्यान्ड"],
-["Do you speak English?","के तपाईं अंग्रेजी बोल्नुहुन्छ?","डु यू स्पिक इङ्लिस"],
-["How much is it?","यसको मूल्य कति हो?","हाउ मच इज इट"],
-["Where is the toilet?","शौचालय कहाँ छ?","वेयर इज द टोइलेट"],
-["I need help","मलाई सहयोग चाहिन्छ","आइ निड हेल्प"],
-["I am from Nepal","म नेपालबाट हुँ","आइ एम फ्रम नेपाल"]
-]},
-"German":{
-flag:"🇩🇪",code:"de-DE",
-lessons:[
-["Hallo","नमस्कार","हालो"],
-["Guten Morgen","शुभ प्रभात","गुटेन मोर्गेन"],
-["Guten Tag","शुभ दिन","गुटेन टाग"],
-["Guten Abend","शुभ साँझ","गुटेन आबेन्ट"],
-["Danke","धन्यवाद","डाङ्के"],
-["Bitte","कृपया","बिटे"],
-["Ja","हो","या"],
-["Nein","होइन","नाइन"],
-["Wie geht es Ihnen?","तपाईंलाई कस्तो छ?","वी गेट एस इनेन"],
-["Mir geht es gut","म ठीक छु","मिर गेट एस गुट"],
-["Wie heißen Sie?","तपाईंको नाम के हो?","वी हाइसेन जी"],
-["Ich heiße...","मेरो नाम ... हो","इख हाइसे"],
-["Auf Wiedersehen","फेरि भेटौँला","आउफ विडरजेएन"],
-["Entschuldigung","माफ गर्नुहोस्","एन्टशुल्डिगुङ"],
-["Ich verstehe nicht","मैले बुझिनँ","इख फेर्स्टेहे निख्ट"],
-["Sprechen Sie Englisch?","के तपाईं अंग्रेजी बोल्नुहुन्छ?","श्प्रेखेन जी एङ्लिश"],
-["Wie viel kostet das?","यसको मूल्य कति हो?","वी फिल कोस्टेट दास"],
-["Wo ist die Toilette?","शौचालय कहाँ छ?","भो इस्ट दी टोइलेटे"],
-["Ich brauche Hilfe","मलाई सहयोग चाहिन्छ","इख ब्राउखे हिल्फे"],
-["Ich komme aus Nepal","म नेपालबाट आएको हुँ","इख कोमे आउस नेपाल"]
-]},
-"Italian":{
-flag:"🇮🇹",code:"it-IT",
-lessons:[
-["Ciao","नमस्कार / बाइ","चाओ"],
-["Buongiorno","शुभ प्रभात","बुओनजोर्नो"],
-["Buonasera","शुभ साँझ","बुओनासेरा"],
-["Buonanotte","शुभ रात्री","बुओनानोट्टे"],
-["Grazie","धन्यवाद","ग्रात्सिए"],
-["Per favore","कृपया","पेर फाभोरे"],
-["Sì","हो","सी"],
-["No","होइन","नो"],
-["Come stai?","तिमीलाई कस्तो छ?","कोमे स्ताइ"],
-["Sto bene","म ठीक छु","स्तो बेने"],
-["Come ti chiami?","तिम्रो नाम के हो?","कोमे ती कियामी"],
-["Mi chiamo...","मेरो नाम ... हो","मी कियामो"],
-["Arrivederci","फेरि भेटौँला","आरिभेदेर्ची"],
-["Mi scusi","माफ गर्नुहोस्","मी स्कुजी"],
-["Non capisco","मैले बुझिनँ","नोन कापिस्को"],
-["Parla inglese?","के तपाईं अंग्रेजी बोल्नुहुन्छ?","पार्ला इङ्लेसे"],
-["Quanto costa?","कति पैसा पर्छ?","क्वान्तो कोस्ता"],
-["Dov'è il bagno?","शौचालय कहाँ छ?","दोभे इल बान्यो"],
-["Ho bisogno di aiuto","मलाई सहयोग चाहिन्छ","ओ बिजोन्यो दी आयुतो"],
-["Vengo dal Nepal","म नेपालबाट आएको हुँ","भेङ्गो दल नेपाल"]
-]},
-"French":{
-flag:"🇫🇷",code:"fr-FR",
-lessons:[
-["Bonjour","नमस्कार / शुभ दिन","बोन्जुर"],
-["Bonsoir","शुभ साँझ","बोन्स्वार"],
-["Bonne nuit","शुभ रात्री","बोन नुई"],
-["Merci","धन्यवाद","मेर्सी"],
-["S'il vous plaît","कृपया","सिल भु प्ले"],
-["Oui","हो","वी"],
-["Non","होइन","नोन"],
-["Comment allez-vous?","तपाईंलाई कस्तो छ?","कोमान ताले भु"],
-["Je vais bien","म ठीक छु","झे भे बियाँ"],
-["Comment vous appelez-vous?","तपाईंको नाम के हो?","कोमान भु जाप्ले भु"],
-["Je m'appelle...","मेरो नाम ... हो","झे मापेल"],
-["Au revoir","फेरि भेटौँला","ओ रभ्वार"],
-["Excusez-moi","माफ गर्नुहोस्","एक्सक्युजे म्वा"],
-["Je ne comprends pas","मैले बुझिनँ","झे न कम्प्राँ पा"],
-["Parlez-vous anglais?","के तपाईं अंग्रेजी बोल्नुहुन्छ?","पार्ले भु आङ्ले"],
-["Combien ça coûte?","कति पैसा पर्छ?","कोम्बियाँ सा कुत"],
-["Où sont les toilettes?","शौचालय कहाँ छ?","उ सोन ले त्वालेट"],
-["J'ai besoin d'aide","मलाई सहयोग चाहिन्छ","झे बेज्वाँ देद"],
-["Je viens du Népal","म नेपालबाट आएको हुँ","झे भियाँ दु नेपाल"]
-]},
-"Spanish":{
-flag:"🇪🇸",code:"es-ES",
-lessons:[
-["Hola","नमस्कार","ओला"],
-["Buenos días","शुभ प्रभात","ब्वेनोस दियास"],
-["Buenas tardes","शुभ दिउँसो","ब्वेनास तार्देस"],
-["Buenas noches","शुभ साँझ / रात्री","ब्वेनास नोचेस"],
-["Gracias","धन्यवाद","ग्रासियास"],
-["Por favor","कृपया","पोर फाभोर"],
-["Sí","हो","सी"],
-["No","होइन","नो"],
-["¿Cómo estás?","तिमीलाई कस्तो छ?","कोमो एस्तास"],
-["Estoy bien","म ठीक छु","एस्तोय बिएन"],
-["¿Cómo te llamas?","तिम्रो नाम के हो?","कोमो ते यामास"],
-["Me llamo...","मेरो नाम ... हो","मे यामो"],
-["Adiós","बिदाइ","आदियोस"],
-["Perdón","माफ गर्नुहोस्","पेर्दोन"],
-["No entiendo","मैले बुझिनँ","नो एनतिएन्दो"],
-["¿Hablas inglés?","के तिमी अंग्रेजी बोल्छौ?","आब्लास इङ्ग्लेस"],
-["¿Cuánto cuesta?","कति पैसा पर्छ?","क्वान्तो क्वेस्ता"],
-["¿Dónde está el baño?","शौचालय कहाँ छ?","दोन्दे एस्ता एल बान्यो"],
-["Necesito ayuda","मलाई सहयोग चाहिन्छ","नेसिसितो आयुदा"],
-["Soy de Nepal","म नेपालबाट हुँ","सोय दे नेपाल"]
-]},
-"Hindi":{
-flag:"🇮🇳",code:"hi-IN",
-lessons:[
-["नमस्ते","नमस्कार","नमस्ते"],
-["सुप्रभात","शुभ प्रभात","सुप्रभात"],
-["शुभ संध्या","शुभ साँझ","शुभ सन्ध्या"],
-["धन्यवाद","धन्यवाद","धन्यवाद"],
-["कृपया","कृपया","कृपया"],
-["हाँ","हो","हाँ"],
-["नहीं","होइन","नहीं"],
-["आप कैसे हैं?","तपाईंलाई कस्तो छ?","आप कैसे हैं"],
-["मैं ठीक हूँ","म ठीक छु","मैं ठीक हूँ"],
-["आपका नाम क्या है?","तपाईंको नाम के हो?","आपका नाम क्या है"],
-["मेरा नाम ... है","मेरो नाम ... हो","मेरा नाम"],
-["अलविदा","बिदाइ","अलविदा"],
-["माफ कीजिए","माफ गर्नुहोस्","माफ कीजिए"],
-["मैं नहीं समझता","मैले बुझिनँ","मैं नहीं समझता"],
-["क्या आप अंग्रेज़ी बोलते हैं?","के तपाईं अंग्रेजी बोल्नुहुन्छ?","क्या आप अंग्रेज़ी बोलते हैं"],
-["यह कितने का है?","यसको मूल्य कति हो?","यह कितने का है"],
-["शौचालय कहाँ है?","शौचालय कहाँ छ?","शौचालय कहाँ है"],
-["मुझे मदद चाहिए","मलाई सहयोग चाहिन्छ","मुझे मदद चाहिए"],
-["मैं नेपाल से हूँ","म नेपालबाट हुँ","मैं नेपाल से हूँ"]
-]},
-"Nepali":{
-flag:"🇳🇵",code:"ne-NP",
-lessons:[
-["नमस्कार","नमस्कार","नमस्कार"],
-["शुभ प्रभात","शुभ प्रभात","शुभ प्रभात"],
-["शुभ साँझ","शुभ साँझ","शुभ साँझ"],
-["धन्यवाद","धन्यवाद","धन्यवाद"],
-["कृपया","कृपया","कृपया"],
-["हो","हो","हो"],
-["होइन","होइन","होइन"],
-["तपाईंलाई कस्तो छ?","तपाईंलाई कस्तो छ?","तपाईंलाई कस्तो छ"],
-["म ठीक छु","म ठीक छु","म ठीक छु"],
-["तपाईंको नाम के हो?","तपाईंको नाम के हो?","तपाईंको नाम के हो"],
-["मेरो नाम ... हो","मेरो नाम ... हो","मेरो नाम"],
-["फेरि भेटौँला","फेरि भेटौँला","फेरि भेटौँला"],
-["माफ गर्नुहोस्","माफ गर्नुहोस्","माफ गर्नुहोस्"],
-["मैले बुझिनँ","मैले बुझिनँ","मैले बुझिनँ"],
-["मलाई सहयोग चाहिन्छ","मलाई सहयोग चाहिन्छ","मलाई सहयोग चाहिन्छ"]
-]},
-"Japanese":{
-flag:"🇯🇵",code:"ja-JP",
-lessons:[
-["こんにちは","नमस्कार","कोन्निचिवा"],
-["おはようございます","शुभ प्रभात","ओहायो गोजाइमास"],
-["こんばんは","शुभ साँझ","कोन्बान्वा"],
-["ありがとうございます","धेरै धन्यवाद","अरिगातो गोजाइमास"],
-["お願いします","कृपया","ओनेगाइशिमास"],
-["はい","हो","हाइ"],
-["いいえ","होइन","इइए"],
-["お元気ですか","तपाईंलाई कस्तो छ?","ओगेन्की देसु का"],
-["元気です","म ठीक छु","गेन्की देसु"],
-["お名前は何ですか","तपाईंको नाम के हो?","ओनामाए वा नान देसु का"],
-["私の名前は...です","मेरो नाम ... हो","वाताशी नो नामाए वा"],
-["さようなら","बिदाइ","सायोनारा"],
-["すみません","माफ गर्नुहोस्","सुमिमासेन"],
-["分かりません","मैले बुझिनँ","वाकारिमासेन"],
-["英語を話せますか","के तपाईं अंग्रेजी बोल्नुहुन्छ?","एइगो ओ हानासेमासु का"],
-["いくらですか","कति पैसा पर्छ?","इकुरा देसु का"],
-["トイレはどこですか","शौचालय कहाँ छ?","तोइरे वा दोको देसु का"],
-["助けてください","कृपया सहयोग गर्नुहोस्","तासुकेते कुदासाइ"],
-["ネパールから来ました","म नेपालबाट आएको हुँ","नेपारु कारा किमाशिता"]
-]}
+const codes={
+"Croatian":"hr","Romanian":"ro","English":"en","German":"de",
+"Italian":"it","French":"fr","Spanish":"es","Portuguese":"pt",
+"Dutch":"nl","Polish":"pl","Czech":"cs","Slovak":"sk",
+"Slovenian":"sl","Hungarian":"hu","Greek":"el","Swedish":"sv",
+"Norwegian":"no","Danish":"da","Finnish":"fi","Russian":"ru",
+"Ukrainian":"uk","Albanian":"sq","Bosnian":"bs","Serbian":"sr",
+"Macedonian":"mk","Bulgarian":"bg","Estonian":"et","Latvian":"lv",
+"Lithuanian":"lt","Icelandic":"is","Irish":"ga","Welsh":"cy",
+"Maltese":"mt","Turkish":"tr","Arabic":"ar","Hebrew":"he",
+"Persian":"fa","Armenian":"hy","Georgian":"ka","Azerbaijani":"az",
+"Kazakh":"kk","Uzbek":"uz","Kyrgyz":"ky","Tajik":"tg",
+"Turkmen":"tk","Mongolian":"mn","Hindi":"hi","Nepali":"ne",
+"Bengali":"bn","Urdu":"ur","Punjabi":"pa","Gujarati":"gu",
+"Marathi":"mr","Tamil":"ta","Telugu":"te","Kannada":"kn",
+"Malayalam":"ml","Sinhala":"si","Chinese":"zh","Japanese":"ja",
+"Korean":"ko","Thai":"th","Vietnamese":"vi","Indonesian":"id",
+"Malay":"ms","Filipino":"tl","Burmese":"my","Khmer":"km",
+"Lao":"lo","Pashto":"ps","Dari":"fa","Kurdish":"ku",
+"Swahili":"sw","Amharic":"am","Somali":"so","Hausa":"ha",
+"Yoruba":"yo","Igbo":"ig","Zulu":"zu","Xhosa":"xh",
+"Afrikaans":"af","Oromo":"om","Shona":"sn","Kinyarwanda":"rw",
+"Sesotho":"st","Setswana":"tn","Malagasy":"mg","Wolof":"wo",
+"Akan":"ak","Twi":"tw","Lingala":"ln","Luxembourgish":"lb",
+"Basque":"eu","Catalan":"ca","Galician":"gl","Corsican":"co",
+"Sardinian":"sc","Belarusian":"be","Faroese":"fo",
+"Haitian Creole":"ht","Maori":"mi","Māori":"mi","Samoan":"sm",
+"Tongan":"to","Fijian":"fj","Tibetan":"bo","Uyghur":"ug",
+"Javanese":"jv","Sundanese":"su","Balinese":"ban","Hmong":"hmn",
+"Quechua":"qu","Guarani":"gn","Hawaiian":"haw","Chichewa":"ny",
+"Bambara":"bm","Ewe":"ee","Aymara":"ay","Breton":"br",
+"Occitan":"oc","Romansh":"rm","Luganda":"lg","Kirundi":"rn",
+"Tsonga":"ts","Venda":"ve","Yiddish":"yi","Latin":"la",
+"Esperanto":"eo","Aramaic":"arc","Scottish Gaelic":"gd",
+"Tigrinya":"ti","Kashmiri":"ks","Sindhi":"sd"
 };
 
+const flags={
+Croatian:"🇭🇷",Romanian:"🇷🇴",English:"🇬🇧",German:"🇩🇪",
+Italian:"🇮🇹",French:"🇫🇷",Spanish:"🇪🇸",Hindi:"🇮🇳",
+Nepali:"🇳🇵",Japanese:"🇯🇵",Chinese:"🇨🇳",Korean:"🇰🇷",
+Arabic:"🇸🇦",Portuguese:"🇵🇹",Russian:"🇷🇺"
+};
+
+const levels=["A1","A2","B1","B2","C1","C2"];
+const topics=[
+["daily","दैनिक बोलचाल"],["greetings","अभिवादन र परिचय"],
+["family","परिवार र सम्बन्ध"],["food","खाना र भान्सा"],
+["work","काम र रोजगार"],["shopping","बजार र किनमेल"],
+["travel","यात्रा र यातायात"],["health","स्वास्थ्य"],
+["education","शिक्षा"],["grammar","व्याकरण"],
+["dialogue","संवाद र अभ्यास"],["exam","परीक्षा र Quiz"]
+];
+
 let selected="Croatian";
-let completed=JSON.parse(localStorage.getItem("gyanLanguageProgress")||"{}");
+let offset=0;
+const pageSize=100;
+let progress=JSON.parse(localStorage.getItem("gyanLanguageProgress")||"{}");
+let quizItem=null;
 
 function showLanguages(){
- const q=document.getElementById("search").value.toLowerCase();
+ const q=document.getElementById("languageSearch").value.toLowerCase();
  const found=languages.filter(x=>x.toLowerCase().includes(q));
- document.getElementById("total").textContent=found.length+" भाषा भेटिए";
- document.getElementById("languages").innerHTML="";
- found.forEach(x=>{
-  const b=document.createElement("button");
-  b.textContent=(courses[x]?.flag||"🌐")+" "+x;
-  if(x===selected)b.classList.add("active");
-  b.onclick=()=>choose(x);
-  document.getElementById("languages").appendChild(b);
- });
-}
-
-function choose(x){
- selected=x;
- showLanguages();
- showCourse();
-}
-
-function showCourse(){
- const c=courses[selected];
- const level=document.getElementById("level").value;
- document.getElementById("levelTag").textContent=level+" पाठ्यक्रम";
- document.getElementById("courseTitle").textContent=(c?.flag||"🌐")+" "+selected+" भाषा";
- const box=document.getElementById("course");
-
- if(!c){
-  document.getElementById("courseInfo").textContent=selected+" भाषाको पाठ्यक्रम केन्द्रमा थपिने क्रममा छ।";
-  box.innerHTML="<h3>📚 "+selected+" भाषा</h3><p>यो भाषा हाम्रो १३०+ भाषा सूचीमा समावेश छ। यसको नेपाली अर्थ, उच्चारण, व्याकरण, संवाद र अभ्यास सामग्री तयार गरी क्रमशः प्रकाशित गरिनेछ।</p><p class='small'>अहिले १० भाषाका प्रारम्भिक पाठ उपलब्ध छन्।</p>";
-  document.getElementById("quizQuestion").textContent="यो भाषाको क्विज पाठ्यक्रम प्रकाशित भएपछि उपलब्ध हुनेछ।";
-  document.getElementById("quizOptions").innerHTML="";
-  document.getElementById("quizResult").textContent="";
-  updateProgress();
-  return;
- }
-
- document.getElementById("courseInfo").textContent="नेपाली अर्थ, उच्चारण र आवाजसहित "+selected+" भाषा सिक्नुहोस्।";
- box.innerHTML="<h3>📖 "+level+" - पाठ १: दैनिक बोलचाल</h3>";
- c.lessons.forEach((a,i)=>{
-  const div=document.createElement("div");
-  div.className="lesson";
-  const done=completed[selected+"-"+level+"-"+i];
-  const title=document.createElement("strong");
-  title.textContent=(i+1)+". "+a[0];
-  const meaning=document.createElement("p");
-  meaning.textContent="नेपाली अर्थ: "+a[1];
-  const pron=document.createElement("p");
-  pron.className="small";
-  pron.textContent="उच्चारण: "+a[2];
-  const speak=document.createElement("button");
-  speak.textContent="🔊 सुन्नुहोस्";
-  speak.onclick=()=>speakWord(a[0],c.code);
-  const mark=document.createElement("button");
-  mark.textContent=done?"✅ पूरा भयो":"पाठ पूरा गर्नुहोस्";
-  if(done)mark.classList.add("active");
-  mark.onclick=()=>{
-   completed[selected+"-"+level+"-"+i]=true;
-   localStorage.setItem("gyanLanguageProgress",JSON.stringify(completed));
-   showCourse();
-  };
-  div.append(title,meaning,pron,speak,mark);
-  box.appendChild(div);
- });
- makeQuiz(c);
- updateProgress();
-}
-
-function speakWord(word,code){
- if(!("speechSynthesis" in window)){
-  alert("तपाईंको ब्राउजरमा आवाज सुविधा उपलब्ध छैन।");
-  return;
- }
- speechSynthesis.cancel();
- const u=new SpeechSynthesisUtterance(word);
- u.lang=code;
- speechSynthesis.speak(u);
-}
-
-function makeQuiz(c){
- const first=c.lessons[4]||c.lessons[0];
- document.getElementById("quizQuestion").textContent=
-  first[0]+" को नेपाली अर्थ के हो?";
- const options=[
-  {text:first[1],correct:true},
-  {text:"शुभ प्रभात",correct:false},
-  {text:"माफ गर्नुहोस्",correct:false}
- ];
- options.sort(()=>Math.random()-.5);
- const box=document.getElementById("quizOptions");
+ document.getElementById("languageTotal").textContent=
+ found.length+" भाषा भेटिए";
+ const box=document.getElementById("languages");
  box.innerHTML="";
- options.forEach(o=>{
+ found.forEach(name=>{
   const b=document.createElement("button");
-  b.textContent=o.text;
-  b.onclick=()=>{
-   document.getElementById("quizResult").textContent=
-    o.correct?"✅ सही उत्तर! धेरै राम्रो।":"❌ गलत उत्तर। फेरि प्रयास गर्नुहोस्।";
-  };
+  b.textContent=(flags[name]||"🌐")+" "+name;
+  if(name===selected)b.classList.add("active");
+  b.onclick=()=>choose(name);
   box.appendChild(b);
  });
 }
 
+function choose(name){
+ selected=name;
+ showLanguages();
+ changeCourse();
+ loadDatabase(true);
+}
+
+function changeCourse(){
+ const level=document.getElementById("level").value;
+ document.getElementById("courseTitle").textContent=
+ (flags[selected]||"🌐")+" "+selected+" भाषा";
+ document.getElementById("courseTag").textContent=
+ level+" पाठ्यक्रम";
+ document.getElementById("courseInfo").textContent=
+ selected+" भाषाको "+level+" तहका शब्द, वाक्य र अभ्यास";
+ document.getElementById("course").innerHTML=
+ "<h3>📚 "+selected+" – "+level+"</h3>"+
+ "<p>तलको Database बाट उपलब्ध वास्तविक पाठहरू हेर्नुहोस्।"+
+ " सामग्री खोज्न शब्द भण्डार वा वाक्य भण्डार प्रयोग गर्नुहोस्।</p>";
+ document.getElementById("dbLevel")?.value=level;
+ updateProgress();
+}
+
+function getCode(){
+ return codes[selected]||null;
+}
+
+async function loadDatabase(reset=true){
+ const status=document.getElementById("dbStatus");
+ const results=document.getElementById("dbResults");
+ const code=getCode();
+ if(reset){
+  offset=0;
+  results.innerHTML="";
+ }
+ if(!code){
+  status.textContent="यस भाषाको कोड उपलब्ध छैन।";
+  return;
+ }
+ const table=document.getElementById("dbType").value;
+ const level=document.getElementById("level").value;
+ const topic=document.getElementById("topic").value;
+ const search=document.getElementById("dbSearch").value.trim();
+ status.textContent="सामग्री खोजिँदै छ...";
+ const params=new URLSearchParams({
+  select:"*",
+  language_code:"eq."+code,
+  level:"eq."+level,
+  order:"id.asc",
+  limit:String(pageSize),
+  offset:String(offset)
+ });
+ if(topic!=="all")params.set("topic","eq."+topic);
+ if(search){
+  const safe=search.replace(/[,*()]/g," ").trim();
+  if(safe){
+   const field=table==="language_words"?"word":"sentence";
+   params.set("or","("+field+".ilike.*"+safe+
+    "*,nepali_meaning.ilike.*"+safe+"*)");
+  }
+ }
+ try{
+  const response=await fetch(
+   SUPABASE_URL+"/rest/v1/"+table+"?"+params,
+   {headers:{
+    apikey:SUPABASE_KEY,
+    Authorization:"Bearer "+SUPABASE_KEY
+   }}
+  );
+  if(!response.ok)throw new Error("Database error "+response.status);
+  const data=await response.json();
+  if(!data.length&&offset===0){
+   status.textContent="यो भाषा र तहमा सामग्री अझै Database मा थपिएको छैन।";
+   return;
+  }
+  data.forEach((item,i)=>{
+   const div=document.createElement("div");
+   div.className="lesson";
+   const title=document.createElement("strong");
+   title.textContent=(offset+i+1)+". "+
+    (item.word||item.sentence||"");
+   const meaning=document.createElement("p");
+   meaning.textContent="नेपाली अर्थ: "+(item.nepali_meaning||"");
+   div.append(title,meaning);
+   if(item.pronunciation){
+    const p=document.createElement("p");
+    p.className="small";
+    p.textContent="उच्चारण: "+item.pronunciation;
+    div.append(p);
+   }
+   if(item.example_sentence){
+    const ex=document.createElement("p");
+    ex.textContent="उदाहरण: "+item.example_sentence;
+    div.append(ex);
+   }
+   if(item.example_nepali){
+    const nep=document.createElement("p");
+    nep.textContent="उदाहरणको अर्थ: "+item.example_nepali;
+    div.append(nep);
+   }
+   const audio=document.createElement("button");
+   audio.textContent="🔊 सुन्नुहोस्";
+   audio.onclick=()=>speak(item.word||item.sentence,code);
+   div.append(audio);
+   results.append(div);
+  });
+  offset+=data.length;
+  status.textContent="देखाइएको सामग्री: "+offset+
+   (data.length===pageSize?" – थप सामग्री उपलब्ध हुन सक्छ।":"");
+ }catch(error){
+  status.textContent="समस्या: "+error.message;
+ }
+}
+
+function speak(value,code){
+ if(!("speechSynthesis" in window)){
+  alert("यो ब्राउजरमा आवाज सुविधा उपलब्ध छैन।");
+  return;
+ }
+ speechSynthesis.cancel();
+ const utterance=new SpeechSynthesisUtterance(value);
+ utterance.lang=code;
+ speechSynthesis.speak(utterance);
+}
+
 function updateProgress(){
- const keys=Object.keys(completed).filter(k=>k.startsWith(selected+"-"));
- const total=courses[selected]?.lessons.length||0;
- const done=keys.length;
- document.getElementById("progressText").textContent="पूरा भएका पाठ: "+done+" / "+total;
+ const prefix=selected+"-"+document.getElementById("level").value+"-";
+ const done=Object.keys(progress).filter(k=>k.startsWith(prefix)).length;
+ const total=12;
+ document.getElementById("progressText").textContent=
+ "पूरा भएका विषय: "+done+" / "+total;
  document.getElementById("progressBar").style.width=
-  (total?done/total*100:0)+"%";
+ Math.min(done/total*100,100)+"%";
+}
+
+function markTopicDone(topic){
+ const key=selected+"-"+document.getElementById("level").value+"-"+topic;
+ progress[key]=true;
+ localStorage.setItem("gyanLanguageProgress",JSON.stringify(progress));
+ updateProgress();
 }
 
 function resetProgress(){
- if(!confirm("यस भाषाको सुरक्षित प्रगति मेटाउने?"))return;
- Object.keys(completed).forEach(k=>{
-  if(k.startsWith(selected+"-"))delete completed[k];
+ if(!confirm("यस भाषाको प्रगति रिसेट गर्ने?"))return;
+ const prefix=selected+"-";
+ Object.keys(progress).forEach(k=>{
+  if(k.startsWith(prefix))delete progress[k];
  });
- localStorage.setItem("gyanLanguageProgress",JSON.stringify(completed));
- showCourse();
+ localStorage.setItem("gyanLanguageProgress",JSON.stringify(progress));
+ updateProgress();
+}
+
+function makeQuiz(){
+ document.getElementById("quizQuestion").textContent=
+ "Quiz का प्रश्नहरू Database मा सामग्री थपिएपछि उपलब्ध हुनेछन्।";
+ document.getElementById("quizOptions").innerHTML="";
+ document.getElementById("quizResult").textContent="";
 }
 
 showLanguages();
-showCourse();
+changeCourse();
+makeQuiz();
 </script>
 </body>
 </html>
