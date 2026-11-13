@@ -50,6 +50,113 @@ a{color:#123b75}
 
 <section class="card">
 <h2 id="courseTitle">🇭🇷 Croatian भाषा</h2>
+ 
+const SUPABASE_URL = "https://dlqvkyhpynunpptaywal.supabase.co";
+const SUPABASE_KEY = "sb_publishable_DY4fyCutBkuejKbPpqePXw_l-G_Okzv";
+
+const languageCodes = {
+  Croatian: "hr",
+  Romanian: "ro",
+  English: "en",
+  German: "de",
+  Italian: "it",
+  French: "fr",
+  Spanish: "es",
+  Hindi: "hi",
+  Nepali: "ne",
+  Japanese: "ja"
+};
+
+let dbOffset = 0;
+const dbLimit = 100;
+
+async function loadDatabase(reset = true) {
+  const status = document.getElementById("dbStatus");
+  const results = document.getElementById("dbResults");
+
+  if (reset) {
+    dbOffset = 0;
+    results.innerHTML = "";
+  }
+
+  const table = document.getElementById("dbType").value;
+  const level = document.getElementById("dbLevel").value;
+  const search = document.getElementById("dbSearch").value.trim();
+  const code = languageCodes[selected] || selected.toLowerCase();
+
+  status.textContent = "सामग्री खोजिँदै छ...";
+
+  const params = new URLSearchParams({
+    select: "*",
+    language_code: "eq." + code,
+    level: "eq." + level,
+    order: "id.asc",
+    limit: String(dbLimit),
+    offset: String(dbOffset)
+  });
+
+  if (search) {
+    const safe = search.replace(/[,*()]/g, " ");
+    const field = table === "language_words" ? "word" : "sentence";
+    params.set("or",
+      "(" + field + ".ilike.*" + safe +
+      "*,nepali_meaning.ilike.*" + safe + "*)"
+    );
+  }
+
+  try {
+    const response = await fetch(
+      SUPABASE_URL + "/rest/v1/" + table + "?" + params,
+      {
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: "Bearer " + SUPABASE_KEY
+        }
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Database error: " + response.status);
+    }
+
+    const data = await response.json();
+
+    if (!data.length && dbOffset === 0) {
+      status.textContent = "यस तहमा सामग्री अझै थपिएको छैन।";
+      return;
+    }
+
+    data.forEach((item, index) => {
+      const div = document.createElement("div");
+      div.className = "lesson";
+
+      const title = document.createElement("strong");
+      title.textContent = (dbOffset + index + 1) + ". " +
+        (item.word || item.sentence || "");
+
+      const meaning = document.createElement("p");
+      meaning.textContent = "नेपाली अर्थ: " + item.nepali_meaning;
+
+      div.append(title, meaning);
+
+      if (item.pronunciation) {
+        const pron = document.createElement("p");
+        pron.className = "small";
+        pron.textContent = "उच्चारण: " + item.pronunciation;
+        div.appendChild(pron);
+      }
+
+      results.appendChild(div);
+    });
+
+    dbOffset += data.length;
+    status.textContent = "जम्मा देखाइएको सामग्री: " + dbOffset;
+
+  } catch (error) {
+    status.textContent = "समस्या: " + error.message;
+  }
+}
+
 <p id="courseInfo">नेपाली अर्थ, उच्चारण र अभ्याससहित भाषा सिक्नुहोस्।</p>
 
 <label for="level"><b>📘 आफ्नो तह छान्नुहोस्</b></label>
