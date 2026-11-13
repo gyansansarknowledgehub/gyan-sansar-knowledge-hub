@@ -64,6 +64,32 @@ a{color:#123b75}
 
 <div class="tag" id="levelTag">A1 Beginner</div>
 <div id="course"></div>
+ 
+<section class="card">
+  <h2>📚 विशाल भाषा शब्द तथा वाक्य भण्डार</h2>
+  <p>Database बाट भाषा, तह र विषयअनुसार सामग्री खोज्नुहोस्।</p>
+
+  <select id="dbType">
+    <option value="language_words">शब्द भण्डार</option>
+    <option value="language_sentences">वाक्य भण्डार</option>
+  </select>
+
+  <select id="dbLevel">
+    <option value="A1">A1 - Beginner</option>
+    <option value="A2">A2 - Elementary</option>
+    <option value="B1">B1 - Intermediate</option>
+    <option value="B2">B2 - Upper Intermediate</option>
+    <option value="C1">C1 - Advanced</option>
+    <option value="C2">C2 - Proficient</option>
+  </select>
+
+  <input id="dbSearch" placeholder="शब्द वा नेपाली अर्थ खोज्नुहोस्">
+  <button class="primary" onclick="loadDatabase(true)">🔍 खोज्नुहोस्</button>
+  <p id="dbStatus">Database सामग्री लोड गर्न तयार छ।</p>
+  <div id="dbResults"></div>
+  <button onclick="loadDatabase(false)">थप सामग्री देखाउनुहोस्</button>
+</section>
+
 </section>
 
 <section class="card">
